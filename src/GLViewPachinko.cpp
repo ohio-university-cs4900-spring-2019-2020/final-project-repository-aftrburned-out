@@ -34,6 +34,7 @@
 
 //If we want to use way points, we need to include this.
 #include "PachinkoWayPoints.h"
+#include "PachinkoWOP.h"
 
 using namespace Aftr;
 
@@ -80,10 +81,45 @@ void GLViewPachinko::onCreate()
    //this->setNumPhysicsStepsPerRender( 0 ); //pause physics engine on start up; will remain paused till set to 1
 }
 
+void GLViewPachinko::updatePhysics()
+{
+	scene->simulate(0.075);
+	scene->fetchResults(true);
+	{
+
+		physx::PxU32 numActors = 0;
+
+		physx::PxActor** actors = scene->getActiveActors(numActors);
+
+		//make sure you set physx::PxSceneFlag::eENABLE_ACTIVE_ACTORS, true in your scene!
+
+		//poses that have changed since the last update
+		for (physx::PxU32 i = 0; i < numActors; ++i)
+
+		{
+
+			physx::PxActor* actor = actors[i];
+
+			PachinkoWOP* wo = static_cast<PachinkoWOP*>(actor->userData);
+
+			wo->updatePoseFromPhysicsEngine(actor);		//add this function to your inherited class
+			//worldLst->push_back(wo);
+
+		}
+
+	}
+}
+
 
 GLViewPachinko::~GLViewPachinko()
 {
    //Implicitly calls GLView::~GLView()
+	if (scene != nullptr)
+		scene->release();
+	if (f != nullptr)
+		f->release();
+	if (p != nullptr)
+		p->release();
 }
 
 
@@ -92,6 +128,9 @@ void GLViewPachinko::updateWorld()
    GLView::updateWorld(); //Just call the parent's update world first.
                           //If you want to add additional functionality, do it after
                           //this call.
+
+   updatePhysics();
+
 }
 
 
@@ -126,8 +165,25 @@ void GLViewPachinko::onKeyDown( const SDL_KeyboardEvent& key )
       this->setNumPhysicsStepsPerRender( 1 );
 
    if( key.keysym.sym == SDLK_1 )
-   {
+   {	//temp
+	   float rx, ry = 0;
+	   srand(r);
+	   rx = rand() % 5;
+	   ry = rand() % 5;
 
+	   PachinkoWOP* wo = PachinkoWOP::New(p, scene, (ManagerEnvironmentConfiguration::getSMM() + "/models/dice_twelveside_outline.wrl"), { 1, 1, 1 }, Aftr::MESH_SHADING_TYPE::mstAUTO, false, physx::PxVec3{ rx, ry, 25 });
+
+	   wo->setPosition({ rx, ry, 25 });
+	   worldLst->push_back(wo);
+	   if (scene != nullptr)
+	   {
+		   r++;
+		   std::cout << "added shape" << std::endl;
+	   }
+	   else
+	   {
+		   std::cout << "scene is null" << std::endl;
+	   }
    }
 }
 
@@ -140,6 +196,23 @@ void GLViewPachinko::onKeyUp( const SDL_KeyboardEvent& key )
 
 void Aftr::GLViewPachinko::loadMap()
 {
+	using namespace physx;
+	f = PxCreateFoundation(PX_PHYSICS_VERSION, a, e);
+
+	gPvd = PxCreatePvd(*f);
+	PxPvdTransport* transport = PxDefaultPvdSocketTransportCreate("127.0.0.1", 5425, 10);
+	gPvd->connect(*transport, PxPvdInstrumentationFlag::eALL);
+
+	p = PxCreateBasePhysics(PX_PHYSICS_VERSION, *f, PxTolerancesScale(), true, gPvd);
+	PxSceneDesc s(p->getTolerancesScale());
+	s.gravity = PxVec3(0.0f, 0.0f, -5.0f);
+	s.flags = PxSceneFlag::eENABLE_ACTIVE_ACTORS;
+	d = PxDefaultCpuDispatcherCreate(2);
+	s.cpuDispatcher = d;
+	s.filterShader = PxDefaultSimulationFilterShader;
+	scene = p->createScene(s);
+
+
    this->worldLst = new WorldList(); //WorldList is a 'smart' vector that is used to store WO*'s
    this->actorLst = new WorldList();
    this->netLst = new WorldList();
@@ -159,31 +232,8 @@ void Aftr::GLViewPachinko::loadMap()
    
    //SkyBox Textures readily available
    std::vector< std::string > skyBoxImageNames; //vector to store texture paths
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_water+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_dust+6.jpg" );
-   skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_mountains+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_winter+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/early_morning+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_afternoon+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_cloudy+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_cloudy3+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_day+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_day2+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_deepsun+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_evening+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_morning+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_morning2+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_noon+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_warp+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_Hubble_Nebula+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_gray_matter+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_easter+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_hot_nebula+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_ice_field+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_lemon_lime+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_milk_chocolate+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_solar_bloom+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_thick_rb+6.jpg" );
+   skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_Hubble_Nebula+6.jpg" );
+  
 
    float ga = 0.1f; //Global Ambient Light level for this module
    ManagerLight::setGlobalAmbientLight( aftrColor4f( ga, ga, ga, 1.0f ) );
@@ -203,91 +253,16 @@ void Aftr::GLViewPachinko::loadMap()
    wo->renderOrderType = RENDER_ORDER_TYPE::roOPAQUE;
    worldLst->push_back( wo );
 
-   ////Create the infinite grass plane (the floor)
-   wo = WO::New( grass, Vector( 1, 1, 1 ), MESH_SHADING_TYPE::mstFLAT );
-   wo->setPosition( Vector( 0, 0, 0 ) );
-   wo->renderOrderType = RENDER_ORDER_TYPE::roOPAQUE;
-   ModelMeshSkin& grassSkin = wo->getModel()->getModelDataShared()->getModelMeshes().at( 0 )->getSkins().at( 0 );
-   grassSkin.getMultiTextureSet().at( 0 )->setTextureRepeats( 5.0f );
-   grassSkin.setAmbient( aftrColor4f( 0.4f, 0.4f, 0.4f, 1.0f ) ); //Color of object when it is not in any light
-   grassSkin.setDiffuse( aftrColor4f( 1.0f, 1.0f, 1.0f, 1.0f ) ); //Diffuse color components (ie, matte shading color of this object)
-   grassSkin.setSpecular( aftrColor4f( 0.4f, 0.4f, 0.4f, 1.0f ) ); //Specular color component (ie, how "shiney" it is)
-   grassSkin.setSpecularCoefficient( 10 ); // How "sharp" are the specular highlights (bigger is sharper, 1000 is very sharp, 10 is very dull)
-   wo->setLabel( "Grass" );
-   worldLst->push_back( wo );
-
-   ////Create the infinite grass plane that uses the Open Dynamics Engine (ODE)
-   //wo = WOStatic::New( grass, Vector(1,1,1), MESH_SHADING_TYPE::mstFLAT );
-   //((WOStatic*)wo)->setODEPrimType( ODE_PRIM_TYPE::PLANE );
-   //wo->setPosition( Vector(0,0,0) );
-   //wo->renderOrderType = RENDER_ORDER_TYPE::roOPAQUE;
-   //wo->getModel()->getModelDataShared()->getModelMeshes().at(0)->getSkins().at(0).getMultiTextureSet().at(0)->setTextureRepeats( 5.0f );
-   //wo->setLabel( "Grass" );
-   //worldLst->push_back( wo );
+  
 
    ////Create the infinite grass plane that uses NVIDIAPhysX(the floor)
-   //wo = WONVStaticPlane::New( grass, Vector(1,1,1), MESH_SHADING_TYPE::mstFLAT );
-   //wo->setPosition( Vector(0,0,0) );
-   //wo->renderOrderType = RENDER_ORDER_TYPE::roOPAQUE;
-   //wo->getModel()->getModelDataShared()->getModelMeshes().at(0)->getSkins().at(0).getMultiTextureSet().at(0)->setTextureRepeats( 5.0f );
-   //wo->setLabel( "Grass" );
-   //worldLst->push_back( wo );
-
-   ////Create the infinite grass plane (the floor)
-   //wo = WONVPhysX::New( shinyRedPlasticCube, Vector(1,1,1), MESH_SHADING_TYPE::mstFLAT );
-   //wo->setPosition( Vector(0,0,50.0f) );
-   //wo->renderOrderType = RENDER_ORDER_TYPE::roOPAQUE;
-   //wo->setLabel( "Grass" );
-   //worldLst->push_back( wo );
-
-   //wo = WONVPhysX::New( shinyRedPlasticCube, Vector(1,1,1), MESH_SHADING_TYPE::mstFLAT );
-   //wo->setPosition( Vector(0,0.5f,75.0f) );
-   //wo->renderOrderType = RENDER_ORDER_TYPE::roOPAQUE;
-   //wo->setLabel( "Grass" );
-   //worldLst->push_back( wo );
-
-   //wo = WONVDynSphere::New( ManagerEnvironmentConfiguration::getVariableValue("sharedmultimediapath") + "/models/sphereRp5.wrl", Vector(1.0f, 1.0f, 1.0f), mstSMOOTH );
-   //wo->setPosition( 0,0,100.0f );
-   //wo->setLabel( "Sphere" );
-   //this->worldLst->push_back( wo );
-
-   //wo = WOHumanCal3DPaladin::New( Vector( .5, 1, 1 ), 100 );
-   //((WOHumanCal3DPaladin*)wo)->rayIsDrawn = false; //hide the "leg ray"
-   //((WOHumanCal3DPaladin*)wo)->isVisible = false; //hide the Bounding Shell
-   //wo->setPosition( Vector(20,20,20) );
-   //wo->setLabel( "Paladin" );
-   //worldLst->push_back( wo );
-   //actorLst->push_back( wo );
-   //netLst->push_back( wo );
-   //this->setActor( wo );
-   //
-   //wo = WOHumanCyborg::New( Vector( .5, 1.25, 1 ), 100 );
-   //wo->setPosition( Vector(20,10,20) );
-   //wo->isVisible = false; //hide the WOHuman's bounding box
-   //((WOHuman*)wo)->rayIsDrawn = false; //show the 'leg' ray
-   //wo->setLabel( "Human Cyborg" );
-   //worldLst->push_back( wo );
-   //actorLst->push_back( wo ); //Push the WOHuman as an actor
-   //netLst->push_back( wo );
-   //this->setActor( wo ); //Start module where human is the actor
-
-   ////Create and insert the WOWheeledVehicle
-   //std::vector< std::string > wheels;
-   //std::string wheelStr( "../../../shared/mm/models/WOCar1970sBeaterTire.wrl" );
-   //wheels.push_back( wheelStr );
-   //wheels.push_back( wheelStr );
-   //wheels.push_back( wheelStr );
-   //wheels.push_back( wheelStr );
-   //wo = WOCar1970sBeater::New( "../../../shared/mm/models/WOCar1970sBeater.wrl", wheels );
-   //wo->setPosition( Vector( 5, -15, 20 ) );
-   //wo->setLabel( "Car 1970s Beater" );
-   //((WOODE*)wo)->mass = 200;
-   //worldLst->push_back( wo );
-   //actorLst->push_back( wo );
-   //this->setActor( wo );
-   //netLst->push_back( wo );
-   
-   createPachinkoWayPoints();
+   wo = PachinkoWOP::New(p, scene, grass, Vector(1,1,1), MESH_SHADING_TYPE::mstFLAT, true, physx::PxVec3{ 0, 0, 0 });
+   wo->setPosition( Vector(0,0,0) );
+   wo->renderOrderType = RENDER_ORDER_TYPE::roOPAQUE;
+   wo->getModel()->getModelDataShared()->getModelMeshes().at(0)->getSkins().at(0).getMultiTextureSet().at(0)->setTextureRepeats( 5.0f );
+   wo->setLabel( "Grass" );
+   worldLst->push_back( wo );
+   //createPachinkoWayPoints();
 }
 
 

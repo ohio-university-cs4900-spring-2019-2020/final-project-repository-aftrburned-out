@@ -1,6 +1,10 @@
 #pragma once
 
 #include "GLView.h"
+#include "PxPhysicsAPI.h"
+#include "extensions/PxDefaultAllocator.h"
+#include "extensions/PxDefaultErrorCallback.h"
+#include "PxFoundation.h"
 
 namespace Aftr
 {
@@ -36,6 +40,17 @@ public:
 protected:
    GLViewPachinko( const std::vector< std::string >& args );
    virtual void onCreate();   
+   void updatePhysics();
+private:
+	physx::PxDefaultAllocator a;
+	physx::PxDefaultErrorCallback e;
+	physx::PxFoundation* f;// = PxCreateFoundation(PX_PHYSICS_VERSION, a, e);
+	physx::PxPhysics* p;// = PxCreatePhysics(PX_PHYSICS_VERSION, *f, PxTolerancesScale(), true, NULL);
+	physx::PxScene* scene;
+	physx::PxPvd* gPvd;
+	physx::PxDefaultCpuDispatcher* d;
+	physx::PxCooking* cook;
+	int r;
 };
 
 /** \} */
