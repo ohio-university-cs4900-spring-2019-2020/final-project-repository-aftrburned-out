@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GLView.h"
+#include "soundMngr.h"
 
 namespace Aftr
 {
@@ -35,7 +36,8 @@ public:
 
 protected:
    GLViewPachinko( const std::vector< std::string >& args );
-   virtual void onCreate();   
+   virtual void onCreate();  
+   SoundMngr* snd;
 };
 
 /** \} */

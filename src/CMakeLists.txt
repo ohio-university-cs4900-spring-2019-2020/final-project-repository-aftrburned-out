@@ -80,6 +80,8 @@ IF( WIN32 ) #MSVC Compiler library paths
                 #    debug "${AFTR_USERLAND_LIB_PATH}/mySampleLibraryNeededInThisModule_debug.lib"
                 #optimized "${CMAKE_SOURCE_DIR}/lib${AFTR_NBITS}/myLocalLib.lib" #Located in ../lib64/ or ../lib32/
                 #    debug "${CMAKE_SOURCE_DIR}/lib${AFTR_NBITS}/myLocalLib.lib"
+                optimized "${CMAKE_SOURCE_DIR}/../irrKlang-64bit-1.6.0/lib/Winx64-visualStudio/irrKlang.lib"
+		            debug "${CMAKE_SOURCE_DIR}/../irrKlang-64bit-1.6.0/lib/Winx64-visualStudio/irrKlang.lib"
                          )
 ENDIF()
 
@@ -99,6 +101,7 @@ ENDIF()
 TARGET_INCLUDE_DIRECTORIES( ${PROJECT_NAME} PRIVATE 
                            #"${AFTR_USR_INCLUDE_DIR}"
                            #"${CMAKE_SOURCE_DIR}/../my3rdPartyLib/include/"
+                           "${CMAKE_SOURCE_DIR}/../irrKlang-64bit-1.6.0/include/"
                           )
 
 

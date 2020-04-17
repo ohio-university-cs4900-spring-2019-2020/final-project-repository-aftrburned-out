@@ -4,6 +4,7 @@
 #include "ManagerOpenGLState.h" //We can change OpenGL State attributes with this
 #include "Axes.h" //We can set Axes to on/off with this
 #include "PhysicsEngineODE.h"
+#include "io.h"
 
 //Different WO used by this module
 #include "WO.h"
@@ -31,11 +32,17 @@
 #include "WONVPhysX.h"
 #include "WONVDynSphere.h"
 #include "AftrGLRendererBase.h"
+#include "WOGUILabel.h"
+#include "WOGUILabel21.h"
+#include "WOFTGLString.h"
+#include "MGLFTGLString.h"
 
 //If we want to use way points, we need to include this.
 #include "PachinkoWayPoints.h"
 
 using namespace Aftr;
+
+std::string comicSans(ManagerEnvironmentConfiguration::getSMM() + "/fonts/TREBUC.ttf");
 
 GLViewPachinko* GLViewPachinko::New( const std::vector< std::string >& args )
 {
@@ -78,6 +85,22 @@ void GLViewPachinko::onCreate()
    }
    this->setActorChaseType( STANDARDEZNAV ); //Default is STANDARDEZNAV mode
    //this->setNumPhysicsStepsPerRender( 0 ); //pause physics engine on start up; will remain paused till set to 1
+   if ((_access("../irrKlang-64bit-1.6.0/media/Tranquility.mp3", 0)) == -1) {
+       std::cout << "Sound file path error.." << std::endl;
+       return;
+   }
+   this->snd = SoundMngr::init();
+   this->snd->play2D("../irrKlang-64bit-1.6.0/media/Tranquility.mp3", true, false, true);
+   this->snd->getSound2D().at(0)->setVolume(0.5f);
+
+   WOGUILabel* label = WOGUILabel::New(nullptr);
+   label->setText("score: 0");
+   label->setColor(0, 0, 0, 255);
+   label->setFontSize(30); //font size is correlated with world size
+   label->setPosition(Vector(0, 1, 0));
+   label->setFontOrientation(FONT_ORIENTATION::foLEFT_TOP);
+   label->setFontPath(comicSans);
+   worldLst->push_back(label);
 }
 
 
