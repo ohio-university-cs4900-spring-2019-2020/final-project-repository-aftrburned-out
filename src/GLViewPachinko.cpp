@@ -81,47 +81,10 @@ void GLViewPachinko::onCreate()
    //this->setNumPhysicsStepsPerRender( 0 ); //pause physics engine on start up; will remain paused till set to 1
 }
 
-void GLViewPachinko::updatePhysics()
-{
-	scene->simulate(0.075);
-	scene->fetchResults(true);
-	{
-
-		physx::PxU32 numActors = 0;
-
-		physx::PxActor** actors = scene->getActiveActors(numActors);
-
-		//make sure you set physx::PxSceneFlag::eENABLE_ACTIVE_ACTORS, true in your scene!
-
-		//poses that have changed since the last update
-		for (physx::PxU32 i = 0; i < numActors; ++i)
-
-		{
-
-			physx::PxActor* actor = actors[i];
-
-			PachinkoWOP* wo = static_cast<PachinkoWOP*>(actor->userData);
-
-			wo->updatePoseFromPhysicsEngine(actor);		//add this function to your inherited class
-			//worldLst->push_back(wo);
-
-		}
-
-	}
-}
-
-
 GLViewPachinko::~GLViewPachinko()
 {
-   //Implicitly calls GLView::~GLView()
-	if (scene != nullptr)
-		scene->release();
-	if (f != nullptr)
-		f->release();
-	if (p != nullptr)
-		p->release();
-}
 
+}
 
 void GLViewPachinko::updateWorld()
 {
@@ -129,7 +92,7 @@ void GLViewPachinko::updateWorld()
                           //If you want to add additional functionality, do it after
                           //this call.
 
-   updatePhysics();
+   wm->updatePhysics();
 
 }
 
@@ -165,25 +128,12 @@ void GLViewPachinko::onKeyDown( const SDL_KeyboardEvent& key )
       this->setNumPhysicsStepsPerRender( 1 );
 
    if( key.keysym.sym == SDLK_1 )
-   {	//temp
-	   float rx, ry = 0;
-	   srand(r);
-	   rx = rand() % 5;
-	   ry = rand() % 5;
-
-	   PachinkoWOP* wo = PachinkoWOP::New(p, scene, (ManagerEnvironmentConfiguration::getSMM() + "/models/dice_twelveside_outline.wrl"), { 1, 1, 1 }, Aftr::MESH_SHADING_TYPE::mstAUTO, false, physx::PxVec3{ rx, ry, 25 });
-
-	   wo->setPosition({ rx, ry, 25 });
-	   worldLst->push_back(wo);
-	   if (scene != nullptr)
-	   {
-		   r++;
-		   std::cout << "added shape" << std::endl;
-	   }
-	   else
-	   {
-		   std::cout << "scene is null" << std::endl;
-	   }
+   {	
+	   worldLst->push_back(wm->__createPachinkoBall());
+   }
+   if (key.keysym.sym == SDLK_2)
+   {
+	   worldLst->push_back(wm->createPachinkoPeg({ 0, 0, 5 }));
    }
 }
 
@@ -196,23 +146,9 @@ void GLViewPachinko::onKeyUp( const SDL_KeyboardEvent& key )
 
 void Aftr::GLViewPachinko::loadMap()
 {
-	using namespace physx;
-	f = PxCreateFoundation(PX_PHYSICS_VERSION, a, e);
-
-	gPvd = PxCreatePvd(*f);
-	PxPvdTransport* transport = PxDefaultPvdSocketTransportCreate("127.0.0.1", 5425, 10);
-	gPvd->connect(*transport, PxPvdInstrumentationFlag::eALL);
-
-	p = PxCreateBasePhysics(PX_PHYSICS_VERSION, *f, PxTolerancesScale(), true, gPvd);
-	PxSceneDesc s(p->getTolerancesScale());
-	s.gravity = PxVec3(0.0f, 0.0f, -5.0f);
-	s.flags = PxSceneFlag::eENABLE_ACTIVE_ACTORS;
-	d = PxDefaultCpuDispatcherCreate(2);
-	s.cpuDispatcher = d;
-	s.filterShader = PxDefaultSimulationFilterShader;
-	scene = p->createScene(s);
-
-
+	// create the WOP Manager
+	wm = new WOPManager();
+	
    this->worldLst = new WorldList(); //WorldList is a 'smart' vector that is used to store WO*'s
    this->actorLst = new WorldList();
    this->netLst = new WorldList();
@@ -256,13 +192,51 @@ void Aftr::GLViewPachinko::loadMap()
   
 
    ////Create the infinite grass plane that uses NVIDIAPhysX(the floor)
-   wo = PachinkoWOP::New(p, scene, grass, Vector(1,1,1), MESH_SHADING_TYPE::mstFLAT, true, physx::PxVec3{ 0, 0, 0 });
+   wo = wm->createFloor(grass);
+   //PachinkoWOP::New(p, scene, grass, Vector(1,1,1), MESH_SHADING_TYPE::mstFLAT, PachinkoWOP::PxObj::Floor, physx::PxVec3{ 0, 0, 0 });
    wo->setPosition( Vector(0,0,0) );
    wo->renderOrderType = RENDER_ORDER_TYPE::roOPAQUE;
    wo->getModel()->getModelDataShared()->getModelMeshes().at(0)->getSkins().at(0).getMultiTextureSet().at(0)->setTextureRepeats( 5.0f );
    wo->setLabel( "Grass" );
    worldLst->push_back( wo );
    //createPachinkoWayPoints();
+
+   // test peg placements
+   std::vector<Vector> list;
+   list.push_back(Vector(0, 0, 5));
+   list.push_back(Vector(0, 4, 5));
+   list.push_back(Vector(0, 8, 5));
+   list.push_back(Vector(0, 12, 5));
+   list.push_back(Vector(0, 16, 5));
+   list.push_back(Vector(0, 20, 5));
+   list.push_back(Vector(0, 24, 5));
+   list.push_back(Vector(0, 0, 15));
+   list.push_back(Vector(0, 4, 15));
+   list.push_back(Vector(0, 8, 15));
+   list.push_back(Vector(0, 12, 15));
+   list.push_back(Vector(0, 16, 15));
+   list.push_back(Vector(0, 20, 15));
+   list.push_back(Vector(0, 24, 15));
+   list.push_back(Vector(0, 0, 25));
+   list.push_back(Vector(0, 4, 25));
+   list.push_back(Vector(0, 8, 25));
+   list.push_back(Vector(0, 12, 25));
+   list.push_back(Vector(0, 16, 25));
+   list.push_back(Vector(0, 20, 25));
+   list.push_back(Vector(0, 24, 25));
+   list.push_back(Vector(0, 0, 35));
+   list.push_back(Vector(0, 4, 35));
+   list.push_back(Vector(0, 8, 35));
+   list.push_back(Vector(0, 12, 35));
+   list.push_back(Vector(0, 16, 35));
+   list.push_back(Vector(0, 20, 35));
+   list.push_back(Vector(0, 24, 35));
+
+   for (int i = 0; i < list.size(); i++)
+   {
+	   worldLst->push_back(wm->createPachinkoPeg(list[i]));
+   }
+
 }
 
 
