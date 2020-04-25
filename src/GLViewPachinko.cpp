@@ -166,7 +166,7 @@ void Aftr::GLViewPachinko::loadMap()
    std::string grass( ManagerEnvironmentConfiguration::getSMM() + "/models/grassFloor400x400_pp.wrl" );
    std::string human( ManagerEnvironmentConfiguration::getSMM() + "/models/human_chest.wrl" );
    
-   //SkyBox Textures readily available
+   //SkyBox Textures readily available	
    std::vector< std::string > skyBoxImageNames; //vector to store texture paths
    skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_Hubble_Nebula+6.jpg" );
   
@@ -232,10 +232,17 @@ void Aftr::GLViewPachinko::loadMap()
    list.push_back(Vector(0, 20, 35));
    list.push_back(Vector(0, 24, 35));
 
+   // to get the rotation angles, use this website:
+   // https://www.andre-gaschler.com/rotationconverter/
+   // and use the "Euler angles of multiple axis rotations" input
+   wm->setPegRot({ 0, -0.1323518, 0, 0.9912028 });
+
    for (int i = 0; i < list.size(); i++)
    {
 	   worldLst->push_back(wm->createPachinkoPeg(list[i]));
    }
+
+   //worldLst->push_back(wm->createBoard({ 50, 50, 50 }, grass));//(ManagerEnvironmentConfiguration::getSMM() + "images/DefaultTexture.jpg")));
 
 }
 
