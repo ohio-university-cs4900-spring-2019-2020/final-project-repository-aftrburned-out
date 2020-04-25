@@ -13,7 +13,11 @@ class WOPManager
 public:
 	WOPManager();
 	void updatePhysics();
+	void setPegRot(PxQuat in);
+	void setFloorRot(PxQuat in);
+	void setBoardRot(PxQuat in);
 	WO* createFloor(std::string path);
+	WO* createBoard(Vector pos, std::string path);
 	WO* __createPachinkoBall();	// do not use
 	WO* createPachinkoBall(Vector pos);
 	WO* createPachinkoPeg(Vector pos);
@@ -25,5 +29,8 @@ protected:
 	PxScene* scene;
 	PxPvd* gPvd;
 	PxDefaultCpuDispatcher* d;
+	PxQuat PegRot;
+	PxQuat FloorRot;
+	PxQuat BoardRot;
 	//PxCooking* cook;
 };
