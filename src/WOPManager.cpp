@@ -45,21 +45,26 @@ void WOPManager::updatePhysics()
 	}
 }
 
+// This sets the WOPManager's initial Peg placement's Rotation 
 void WOPManager::setPegRot(PxQuat in)
 {
 	PegRot = in;
 }
 
+// This sets the WOPManager's initial Floor placement's Rotation 
 void WOPManager::setFloorRot(PxQuat in)
 {
 	FloorRot = in;
 }
 
+// This sets the WOPManager's initial Board placement's Rotation 
 void WOPManager::setBoardRot(PxQuat in)
 {
 	BoardRot = in;
 }
 
+// This creates a Pachinko Peg at the given postion.
+// Remember to use setPegRot() before using this to give it a rotation.
 WO* WOPManager::createPachinkoPeg(Vector pos)
 {
 	PachinkoWOP* wo = PachinkoWOP::New(p, scene, (ManagerEnvironmentConfiguration::getSMM() + "/models/WOTeapot/cylinder/cylinder.3ds"), { .25, .25, .5 }, MESH_SHADING_TYPE::mstFLAT, PachinkoWOP::PxObj::Peg, { pos.x, pos.y, pos.z }, PegRot);
@@ -67,6 +72,7 @@ WO* WOPManager::createPachinkoPeg(Vector pos)
 	return wo;
 }
 
+// Do not use this, it is only to test
 WO* WOPManager::__createPachinkoBall()
 {
 	float rx, ry = 0;
@@ -77,6 +83,7 @@ WO* WOPManager::__createPachinkoBall()
 
 }
 
+// Creates a Pachinko Ball at the position specified
 WO* WOPManager::createPachinkoBall(Vector pos)
 {
 	float rx, ry, rz = 0;
@@ -89,11 +96,15 @@ WO* WOPManager::createPachinkoBall(Vector pos)
 	return wo;
 }
 
+// Creates the floor.
+// Remember to use setPlaneRot() before using this to give it a rotation.
 WO* WOPManager::createFloor(std::string path)
 {
 	return PachinkoWOP::New(p, scene, path, Vector(1, 1, 1), MESH_SHADING_TYPE::mstFLAT, PachinkoWOP::PxObj::Plane, physx::PxVec3{ 0, 0, 0 }, FloorRot);
 }
 
+// Creates the board at the given positon with the given model.
+// Remember to use setPlaneRot() before using this to give it a rotation.
 WO* WOPManager::createBoard(Vector pos, std::string path)
 {
 	float rx, ry, rz = 0;
