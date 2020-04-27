@@ -561,6 +561,39 @@ void Aftr::GLViewPachinko::loadMap()
 }
 
 
+/*
+	This will set all board surrounding pieces that will hold the balls in. Front, back, and both sides
+*/
+void GLViewPachinko::setBoardState() {
+
+	//style for the background board
+	std::string board(ManagerEnvironmentConfiguration::getSMM() + "/models/grassFloor400x400_pp.wrl");
+
+	//this is the background board
+	wm->setBoardRot({ 0, 0.7071068, 0, 0.7071068 });
+	WO* wo = wm->createBoard(Vector(-3.5, 0, 0), board);
+
+	worldLst->push_back(wo);
+
+	//this is the transparent front board
+	wm->setPlaneRot({ 0, 0.7071068, 0, 0.7071068 });
+	wo = wm->createPlane({ 3.5, 0, 0 });
+
+	worldLst->push_back(wo);
+
+	//left side plane
+	wm->setPlaneRot({ 0.7071068, 0, 0, 0.7071068 });
+	wo = wm->createPlane({ 0, -5, 0 });
+
+	worldLst->push_back(wo);
+
+	//right side plane
+	wo = wm->createPlane({0, wm->getMax() + 5, 0});
+
+	worldLst->push_back(wo);
+}
+
+
 void GLViewPachinko::createPachinkoWayPoints()
 {
    // Create a waypoint with a radius of 3, a frequency of 5 seconds, activated by GLView's camera, and is visible.
