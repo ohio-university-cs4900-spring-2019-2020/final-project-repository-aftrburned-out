@@ -34,6 +34,7 @@
 
 //If we want to use way points, we need to include this.
 #include "PachinkoWayPoints.h"
+#include "PachinkoWOP.h"
 
 using namespace Aftr;
 
@@ -80,18 +81,19 @@ void GLViewPachinko::onCreate()
    //this->setNumPhysicsStepsPerRender( 0 ); //pause physics engine on start up; will remain paused till set to 1
 }
 
-
 GLViewPachinko::~GLViewPachinko()
 {
-   //Implicitly calls GLView::~GLView()
-}
 
+}
 
 void GLViewPachinko::updateWorld()
 {
    GLView::updateWorld(); //Just call the parent's update world first.
                           //If you want to add additional functionality, do it after
                           //this call.
+
+   wm->updatePhysics();
+
 }
 
 
@@ -126,20 +128,358 @@ void GLViewPachinko::onKeyDown( const SDL_KeyboardEvent& key )
       this->setNumPhysicsStepsPerRender( 1 );
 
    if( key.keysym.sym == SDLK_1 )
+   {	
+	   worldLst->push_back(wm->__createPachinkoBall());
+   }
+   if (key.keysym.sym == SDLK_2)
    {
-
+	   worldLst->push_back(wm->createPachinkoPeg({ 0, 0, 5 }));
    }
 }
-
 
 void GLViewPachinko::onKeyUp( const SDL_KeyboardEvent& key )
 {
    GLView::onKeyUp( key );
 }
 
+std::vector<Vector> presetOne(WOPManager* wm){
+	std::vector<Vector> list;
+
+	//row 1
+	list.push_back(Vector(0, 0, 5));
+	list.push_back(Vector(0, 5, 5));
+	list.push_back(Vector(0, 10, 5));
+	list.push_back(Vector(0, 15, 5));
+	list.push_back(Vector(0, 20, 5));
+
+	//row 2 offset
+	list.push_back(Vector(0, 2.5, 10));
+	list.push_back(Vector(0, 7.5, 10));
+	list.push_back(Vector(0, 12.5, 10));
+	list.push_back(Vector(0, 17.5, 10));
+
+	//row 3
+	list.push_back(Vector(0, 0, 15));
+	list.push_back(Vector(0, 5, 15));
+	list.push_back(Vector(0, 10, 15));
+	list.push_back(Vector(0, 15, 15));
+	list.push_back(Vector(0, 20, 15));
+
+	//row 4 offset
+	list.push_back(Vector(0, 2.5, 20));
+	list.push_back(Vector(0, 7.5, 20));
+	list.push_back(Vector(0, 12.5, 20));
+	list.push_back(Vector(0, 17.5, 20));
+
+	//row 5 
+	list.push_back(Vector(0, 0, 25));
+	list.push_back(Vector(0, 5, 25));
+	list.push_back(Vector(0, 10, 25));
+	list.push_back(Vector(0, 15, 25));
+	list.push_back(Vector(0, 20, 25));
+
+	//row 6 offset
+	list.push_back(Vector(0, 2.5, 30));
+	list.push_back(Vector(0, 7.5, 30));
+	list.push_back(Vector(0, 12.5, 30));
+	list.push_back(Vector(0, 17.5, 30));
+
+	//row 7
+	list.push_back(Vector(0, 0, 35));
+	list.push_back(Vector(0, 5, 35));
+	list.push_back(Vector(0, 10, 35));
+	list.push_back(Vector(0, 15, 35));
+	list.push_back(Vector(0, 20, 35));
+
+	wm->setBallBounds(0, 20, 45);
+
+	return list;
+}
+
+std::vector<Vector> presetTwo(WOPManager* wm){
+	std::vector<Vector> list;
+
+	//row 1
+	list.push_back(Vector(0, 0, 5));
+	list.push_back(Vector(0, 5, 5));
+	list.push_back(Vector(0, 10, 5));
+	list.push_back(Vector(0, 15, 5));
+	list.push_back(Vector(0, 20, 5));
+	list.push_back(Vector(0, 25, 5));
+	list.push_back(Vector(0, 30, 5));
+	list.push_back(Vector(0, 35, 5));
+
+	//row 2 offset
+	list.push_back(Vector(0, 2.5, 10));
+	list.push_back(Vector(0, 7.5, 10));
+	list.push_back(Vector(0, 12.5, 10));
+	list.push_back(Vector(0, 17.5, 10));
+	list.push_back(Vector(0, 22.5, 10));
+	list.push_back(Vector(0, 27.5, 10));
+	list.push_back(Vector(0, 32.5, 10));
+
+	//row 3
+	list.push_back(Vector(0, 0, 15));
+	list.push_back(Vector(0, 5, 15));
+	list.push_back(Vector(0, 10, 15));
+	list.push_back(Vector(0, 15, 15));
+	list.push_back(Vector(0, 20, 15));
+	list.push_back(Vector(0, 25, 15));
+	list.push_back(Vector(0, 30, 15));
+	list.push_back(Vector(0, 35, 15));
+
+	//row 4 offset
+	list.push_back(Vector(0, 2.5, 20));
+	list.push_back(Vector(0, 7.5, 20));
+	list.push_back(Vector(0, 12.5, 20));
+	list.push_back(Vector(0, 17.5, 20));
+	list.push_back(Vector(0, 22.5, 20));
+	list.push_back(Vector(0, 27.5, 20));
+	list.push_back(Vector(0, 32.5, 20));
+
+	//row 5
+	list.push_back(Vector(0, 0, 25));
+	list.push_back(Vector(0, 5, 25));
+	list.push_back(Vector(0, 10, 25));
+	list.push_back(Vector(0, 15, 25));
+	list.push_back(Vector(0, 20, 25));
+	list.push_back(Vector(0, 25, 25));
+	list.push_back(Vector(0, 30, 25));
+	list.push_back(Vector(0, 35, 25));
+
+	//row 6 offset
+	list.push_back(Vector(0, 2.5, 30));
+	list.push_back(Vector(0, 7.5, 30));
+	list.push_back(Vector(0, 12.5, 30));
+	list.push_back(Vector(0, 17.5, 30));
+	list.push_back(Vector(0, 22.5, 30));
+	list.push_back(Vector(0, 27.5, 30));
+	list.push_back(Vector(0, 32.5, 30));
+
+	//row 7
+	list.push_back(Vector(0, 0, 35));
+	list.push_back(Vector(0, 5, 35));
+	list.push_back(Vector(0, 10, 35));
+	list.push_back(Vector(0, 15, 35));
+	list.push_back(Vector(0, 20, 35));
+	list.push_back(Vector(0, 25, 35));
+	list.push_back(Vector(0, 30, 35));
+	list.push_back(Vector(0, 35, 35));
+
+	//row 8 offset
+	list.push_back(Vector(0, 2.5, 40));
+	list.push_back(Vector(0, 7.5, 40));
+	list.push_back(Vector(0, 12.5, 40));
+	list.push_back(Vector(0, 17.5, 40));
+	list.push_back(Vector(0, 22.5, 40));
+	list.push_back(Vector(0, 27.5, 40));
+	list.push_back(Vector(0, 32.5, 40));
+
+	//row 9
+	list.push_back(Vector(0, 0, 45));
+	list.push_back(Vector(0, 5, 45));
+	list.push_back(Vector(0, 10, 45));
+	list.push_back(Vector(0, 15, 45));
+	list.push_back(Vector(0, 20, 45));
+	list.push_back(Vector(0, 25, 45));
+	list.push_back(Vector(0, 30, 45));
+	list.push_back(Vector(0, 35, 45));
+
+	wm->setBallBounds(0, 35, 55);
+
+	return list;
+}
+
+std::vector<Vector> presetThree(WOPManager* wm){
+	std::vector<Vector> list;
+
+	//row 1
+	list.push_back(Vector(0, 0, 5));
+	list.push_back(Vector(0, 5, 5));
+	list.push_back(Vector(0, 10, 5));
+	list.push_back(Vector(0, 15, 5));
+	list.push_back(Vector(0, 20, 5));
+	list.push_back(Vector(0, 25, 5));
+	list.push_back(Vector(0, 30, 5));
+	list.push_back(Vector(0, 35, 5));
+	list.push_back(Vector(0, 40, 5));
+	list.push_back(Vector(0, 45, 5));
+	list.push_back(Vector(0, 50, 5));
+	list.push_back(Vector(0, 55, 5));
+
+	//row 2 offset
+	list.push_back(Vector(0, 2.5, 10));
+	list.push_back(Vector(0, 7.5, 10));
+	list.push_back(Vector(0, 12.5, 10));
+	list.push_back(Vector(0, 17.5, 10));
+	list.push_back(Vector(0, 22.5, 10));
+	list.push_back(Vector(0, 27.5, 10));
+	list.push_back(Vector(0, 32.5, 10));
+	list.push_back(Vector(0, 37.5, 10));
+	list.push_back(Vector(0, 42.5, 10));
+	list.push_back(Vector(0, 47.5, 10));
+	list.push_back(Vector(0, 52.5, 10));
+
+	//row 3
+	list.push_back(Vector(0, 0, 15));
+	list.push_back(Vector(0, 5, 15));
+	list.push_back(Vector(0, 10, 15));
+	list.push_back(Vector(0, 15, 15));
+	list.push_back(Vector(0, 20, 15));
+	list.push_back(Vector(0, 25, 15));
+	list.push_back(Vector(0, 30, 15));
+	list.push_back(Vector(0, 35, 15));
+	list.push_back(Vector(0, 40, 15));
+	list.push_back(Vector(0, 45, 15));
+	list.push_back(Vector(0, 50, 15));
+	list.push_back(Vector(0, 55, 15));
+
+	//row 4 offset
+	list.push_back(Vector(0, 2.5, 20));
+	list.push_back(Vector(0, 7.5, 20));
+	list.push_back(Vector(0, 12.5, 20));
+	list.push_back(Vector(0, 17.5, 20));
+	list.push_back(Vector(0, 22.5, 20));
+	list.push_back(Vector(0, 27.5, 20));
+	list.push_back(Vector(0, 32.5, 20));
+	list.push_back(Vector(0, 37.5, 20));
+	list.push_back(Vector(0, 42.5, 20));
+	list.push_back(Vector(0, 47.5, 20));
+	list.push_back(Vector(0, 52.5, 20));
+
+	//row 5 
+	list.push_back(Vector(0, 0, 25));
+	list.push_back(Vector(0, 5, 25));
+	list.push_back(Vector(0, 10, 25));
+	list.push_back(Vector(0, 15, 25));
+	list.push_back(Vector(0, 20, 25));
+	list.push_back(Vector(0, 25, 25));
+	list.push_back(Vector(0, 30, 25));
+	list.push_back(Vector(0, 35, 25));
+	list.push_back(Vector(0, 40, 25));
+	list.push_back(Vector(0, 45, 25));
+	list.push_back(Vector(0, 50, 25));
+	list.push_back(Vector(0, 55, 25));
+
+	//row 6 offset
+	list.push_back(Vector(0, 2.5, 30));
+	list.push_back(Vector(0, 7.5, 30));
+	list.push_back(Vector(0, 12.5, 30));
+	list.push_back(Vector(0, 17.5, 30));
+	list.push_back(Vector(0, 22.5, 30));
+	list.push_back(Vector(0, 27.5, 30));
+	list.push_back(Vector(0, 32.5, 30));
+	list.push_back(Vector(0, 37.5, 30));
+	list.push_back(Vector(0, 42.5, 30));
+	list.push_back(Vector(0, 47.5, 30));
+	list.push_back(Vector(0, 52.5, 30));
+
+	//row 7
+	list.push_back(Vector(0, 0, 35));
+	list.push_back(Vector(0, 5, 35));
+	list.push_back(Vector(0, 10, 35));
+	list.push_back(Vector(0, 15, 35));
+	list.push_back(Vector(0, 20, 35));
+	list.push_back(Vector(0, 25, 35));
+	list.push_back(Vector(0, 30, 35));
+	list.push_back(Vector(0, 35, 35));
+	list.push_back(Vector(0, 40, 35));
+	list.push_back(Vector(0, 45, 35));
+	list.push_back(Vector(0, 50, 35));
+	list.push_back(Vector(0, 55, 35));
+
+	//row 8 offset
+	list.push_back(Vector(0, 2.5, 40));
+	list.push_back(Vector(0, 7.5, 40));
+	list.push_back(Vector(0, 12.5, 40));
+	list.push_back(Vector(0, 17.5, 40));
+	list.push_back(Vector(0, 22.5, 40));
+	list.push_back(Vector(0, 27.5, 40));
+	list.push_back(Vector(0, 32.5, 40));
+	list.push_back(Vector(0, 37.5, 40));
+	list.push_back(Vector(0, 42.5, 40));
+	list.push_back(Vector(0, 47.5, 40));
+	list.push_back(Vector(0, 52.5, 40));
+
+	//row 9
+	list.push_back(Vector(0, 0, 45));
+	list.push_back(Vector(0, 5, 45));
+	list.push_back(Vector(0, 10, 45));
+	list.push_back(Vector(0, 15, 45));
+	list.push_back(Vector(0, 20, 45));
+	list.push_back(Vector(0, 25, 45));
+	list.push_back(Vector(0, 30, 45));
+	list.push_back(Vector(0, 35, 45));
+	list.push_back(Vector(0, 40, 45));
+	list.push_back(Vector(0, 45, 45));
+	list.push_back(Vector(0, 50, 45));
+	list.push_back(Vector(0, 55, 45));
+
+	//row 10 offset
+	list.push_back(Vector(0, 2.5, 50));
+	list.push_back(Vector(0, 7.5, 50));
+	list.push_back(Vector(0, 12.5, 50));
+	list.push_back(Vector(0, 17.5, 50));
+	list.push_back(Vector(0, 22.5, 50));
+	list.push_back(Vector(0, 27.5, 50));
+	list.push_back(Vector(0, 32.5, 50));
+	list.push_back(Vector(0, 37.5, 50));
+	list.push_back(Vector(0, 42.5, 50));
+	list.push_back(Vector(0, 47.5, 50));
+	list.push_back(Vector(0, 52.5, 50));
+
+	//row 11
+	list.push_back(Vector(0, 0, 55));
+	list.push_back(Vector(0, 5, 55));
+	list.push_back(Vector(0, 10, 55));
+	list.push_back(Vector(0, 15, 55));
+	list.push_back(Vector(0, 20, 55));
+	list.push_back(Vector(0, 25, 55));
+	list.push_back(Vector(0, 30, 55));
+	list.push_back(Vector(0, 35, 55));
+	list.push_back(Vector(0, 40, 55));
+	list.push_back(Vector(0, 45, 55));
+	list.push_back(Vector(0, 50, 55));
+	list.push_back(Vector(0, 55, 55));
+
+	//row 12 offset
+	list.push_back(Vector(0, 2.5, 60));
+	list.push_back(Vector(0, 7.5, 60));
+	list.push_back(Vector(0, 12.5, 60));
+	list.push_back(Vector(0, 17.5, 60));
+	list.push_back(Vector(0, 22.5, 60));
+	list.push_back(Vector(0, 27.5, 60));
+	list.push_back(Vector(0, 32.5, 60));
+	list.push_back(Vector(0, 37.5, 60));
+	list.push_back(Vector(0, 42.5, 60));
+	list.push_back(Vector(0, 47.5, 60));
+	list.push_back(Vector(0, 52.5, 60));
+
+	//row 13
+	list.push_back(Vector(0, 0, 65));
+	list.push_back(Vector(0, 5, 65));
+	list.push_back(Vector(0, 10, 65));
+	list.push_back(Vector(0, 15, 65));
+	list.push_back(Vector(0, 20, 65));
+	list.push_back(Vector(0, 25, 65));
+	list.push_back(Vector(0, 30, 65));
+	list.push_back(Vector(0, 35, 65));
+	list.push_back(Vector(0, 40, 65));
+	list.push_back(Vector(0, 45, 65));
+	list.push_back(Vector(0, 50, 65));
+	list.push_back(Vector(0, 55, 65));
+
+	wm->setBallBounds(0, 55, 75);
+
+	return list;
+
+}
 
 void Aftr::GLViewPachinko::loadMap()
 {
+	// create the WOP Manager
+	wm = new WOPManager();
+	
    this->worldLst = new WorldList(); //WorldList is a 'smart' vector that is used to store WO*'s
    this->actorLst = new WorldList();
    this->netLst = new WorldList();
@@ -157,33 +497,10 @@ void Aftr::GLViewPachinko::loadMap()
    std::string grass( ManagerEnvironmentConfiguration::getSMM() + "/models/grassFloor400x400_pp.wrl" );
    std::string human( ManagerEnvironmentConfiguration::getSMM() + "/models/human_chest.wrl" );
    
-   //SkyBox Textures readily available
+   //SkyBox Textures readily available	
    std::vector< std::string > skyBoxImageNames; //vector to store texture paths
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_water+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_dust+6.jpg" );
-   skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_mountains+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_winter+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/early_morning+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_afternoon+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_cloudy+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_cloudy3+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_day+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_day2+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_deepsun+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_evening+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_morning+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_morning2+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_noon+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_warp+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_Hubble_Nebula+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_gray_matter+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_easter+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_hot_nebula+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_ice_field+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_lemon_lime+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_milk_chocolate+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_solar_bloom+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_thick_rb+6.jpg" );
+   skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_Hubble_Nebula+6.jpg" );
+  
 
    float ga = 0.1f; //Global Ambient Light level for this module
    ManagerLight::setGlobalAmbientLight( aftrColor4f( ga, ga, ga, 1.0f ) );
@@ -203,91 +520,77 @@ void Aftr::GLViewPachinko::loadMap()
    wo->renderOrderType = RENDER_ORDER_TYPE::roOPAQUE;
    worldLst->push_back( wo );
 
-   ////Create the infinite grass plane (the floor)
-   wo = WO::New( grass, Vector( 1, 1, 1 ), MESH_SHADING_TYPE::mstFLAT );
-   wo->setPosition( Vector( 0, 0, 0 ) );
-   wo->renderOrderType = RENDER_ORDER_TYPE::roOPAQUE;
-   ModelMeshSkin& grassSkin = wo->getModel()->getModelDataShared()->getModelMeshes().at( 0 )->getSkins().at( 0 );
-   grassSkin.getMultiTextureSet().at( 0 )->setTextureRepeats( 5.0f );
-   grassSkin.setAmbient( aftrColor4f( 0.4f, 0.4f, 0.4f, 1.0f ) ); //Color of object when it is not in any light
-   grassSkin.setDiffuse( aftrColor4f( 1.0f, 1.0f, 1.0f, 1.0f ) ); //Diffuse color components (ie, matte shading color of this object)
-   grassSkin.setSpecular( aftrColor4f( 0.4f, 0.4f, 0.4f, 1.0f ) ); //Specular color component (ie, how "shiney" it is)
-   grassSkin.setSpecularCoefficient( 10 ); // How "sharp" are the specular highlights (bigger is sharper, 1000 is very sharp, 10 is very dull)
-   wo->setLabel( "Grass" );
-   worldLst->push_back( wo );
-
-   ////Create the infinite grass plane that uses the Open Dynamics Engine (ODE)
-   //wo = WOStatic::New( grass, Vector(1,1,1), MESH_SHADING_TYPE::mstFLAT );
-   //((WOStatic*)wo)->setODEPrimType( ODE_PRIM_TYPE::PLANE );
-   //wo->setPosition( Vector(0,0,0) );
-   //wo->renderOrderType = RENDER_ORDER_TYPE::roOPAQUE;
-   //wo->getModel()->getModelDataShared()->getModelMeshes().at(0)->getSkins().at(0).getMultiTextureSet().at(0)->setTextureRepeats( 5.0f );
-   //wo->setLabel( "Grass" );
-   //worldLst->push_back( wo );
+  
 
    ////Create the infinite grass plane that uses NVIDIAPhysX(the floor)
-   //wo = WONVStaticPlane::New( grass, Vector(1,1,1), MESH_SHADING_TYPE::mstFLAT );
-   //wo->setPosition( Vector(0,0,0) );
-   //wo->renderOrderType = RENDER_ORDER_TYPE::roOPAQUE;
-   //wo->getModel()->getModelDataShared()->getModelMeshes().at(0)->getSkins().at(0).getMultiTextureSet().at(0)->setTextureRepeats( 5.0f );
-   //wo->setLabel( "Grass" );
-   //worldLst->push_back( wo );
+   wm->setPlaneRot({ 0, 0, 0, 1 });
+   wo = wm->createPlane({ 0, 0, 0 });
+   //PachinkoWOP::New(p, scene, grass, Vector(1,1,1), MESH_SHADING_TYPE::mstFLAT, PachinkoWOP::PxObj::Floor, physx::PxVec3{ 0, 0, 0 });
+   wo->setPosition( Vector(0,0,0) );
+   wo->renderOrderType = RENDER_ORDER_TYPE::roOPAQUE;
+   wo->getModel()->getModelDataShared()->getModelMeshes().at(0)->getSkins().at(0).getMultiTextureSet().at(0)->setTextureRepeats( 5.0f );
+   wo->setLabel( "Grass" );
+   worldLst->push_back( wo );
+   //createPachinkoWayPoints();
 
-   ////Create the infinite grass plane (the floor)
-   //wo = WONVPhysX::New( shinyRedPlasticCube, Vector(1,1,1), MESH_SHADING_TYPE::mstFLAT );
-   //wo->setPosition( Vector(0,0,50.0f) );
-   //wo->renderOrderType = RENDER_ORDER_TYPE::roOPAQUE;
-   //wo->setLabel( "Grass" );
-   //worldLst->push_back( wo );
-
-   //wo = WONVPhysX::New( shinyRedPlasticCube, Vector(1,1,1), MESH_SHADING_TYPE::mstFLAT );
-   //wo->setPosition( Vector(0,0.5f,75.0f) );
-   //wo->renderOrderType = RENDER_ORDER_TYPE::roOPAQUE;
-   //wo->setLabel( "Grass" );
-   //worldLst->push_back( wo );
-
-   //wo = WONVDynSphere::New( ManagerEnvironmentConfiguration::getVariableValue("sharedmultimediapath") + "/models/sphereRp5.wrl", Vector(1.0f, 1.0f, 1.0f), mstSMOOTH );
-   //wo->setPosition( 0,0,100.0f );
-   //wo->setLabel( "Sphere" );
-   //this->worldLst->push_back( wo );
-
-   //wo = WOHumanCal3DPaladin::New( Vector( .5, 1, 1 ), 100 );
-   //((WOHumanCal3DPaladin*)wo)->rayIsDrawn = false; //hide the "leg ray"
-   //((WOHumanCal3DPaladin*)wo)->isVisible = false; //hide the Bounding Shell
-   //wo->setPosition( Vector(20,20,20) );
-   //wo->setLabel( "Paladin" );
-   //worldLst->push_back( wo );
-   //actorLst->push_back( wo );
-   //netLst->push_back( wo );
-   //this->setActor( wo );
    //
-   //wo = WOHumanCyborg::New( Vector( .5, 1.25, 1 ), 100 );
-   //wo->setPosition( Vector(20,10,20) );
-   //wo->isVisible = false; //hide the WOHuman's bounding box
-   //((WOHuman*)wo)->rayIsDrawn = false; //show the 'leg' ray
-   //wo->setLabel( "Human Cyborg" );
-   //worldLst->push_back( wo );
-   //actorLst->push_back( wo ); //Push the WOHuman as an actor
-   //netLst->push_back( wo );
-   //this->setActor( wo ); //Start module where human is the actor
+   // example of an invisible wall that sits behind the pegs
+   wm->setPlaneRot({ 0, 0.7071068, 0, 0.7071068 });
+   wo = wm->createPlane({ -3.5, 0, 0 });
+   worldLst->push_back(wo);
+   wm->setPlaneRot({ 0.7071068, 0, 0, 0.7071068 });
+   wo = wm->createPlane({ 0, -5, 0 });
+   worldLst->push_back(wo);
+   //
 
-   ////Create and insert the WOWheeledVehicle
-   //std::vector< std::string > wheels;
-   //std::string wheelStr( "../../../shared/mm/models/WOCar1970sBeaterTire.wrl" );
-   //wheels.push_back( wheelStr );
-   //wheels.push_back( wheelStr );
-   //wheels.push_back( wheelStr );
-   //wheels.push_back( wheelStr );
-   //wo = WOCar1970sBeater::New( "../../../shared/mm/models/WOCar1970sBeater.wrl", wheels );
-   //wo->setPosition( Vector( 5, -15, 20 ) );
-   //wo->setLabel( "Car 1970s Beater" );
-   //((WOODE*)wo)->mass = 200;
-   //worldLst->push_back( wo );
-   //actorLst->push_back( wo );
-   //this->setActor( wo );
-   //netLst->push_back( wo );
-   
-   createPachinkoWayPoints();
+
+   std::vector<Vector> list = presetThree();
+
+   // to get the rotation angles, use this website:
+   // https://www.andre-gaschler.com/rotationconverter/
+   // and use the "Euler angles of multiple axis rotations" input
+   wm->setPegRot({ 0.0864101, -0.1300295, -0.0113761, 0.9876721 });
+
+   for (int i = 0; i < list.size(); i++)
+   {
+	   worldLst->push_back(wm->createPachinkoPeg(list[i]));
+   }
+
+   //worldLst->push_back(wm->createBoard({ 50, 50, 50 }, grass));//(ManagerEnvironmentConfiguration::getSMM() + "images/DefaultTexture.jpg")));
+
+}
+
+
+/*
+	This will set all board surrounding pieces that will hold the balls in. Front, back, and both sides
+*/
+void GLViewPachinko::setBoardState() {
+
+	//style for the background board
+	std::string board(ManagerEnvironmentConfiguration::getSMM() + "/models/grassFloor400x400_pp.wrl");
+
+	//this is the background board
+	wm->setBoardRot({ 0, 0.7071068, 0, 0.7071068 });
+	WO* wo = wm->createBoard(Vector(-3.5, 0, 0), board);
+
+	worldLst->push_back(wo);
+
+	//this is the transparent front board
+	wm->setPlaneRot({ 0, 0.7071068, 0, 0.7071068 });
+	wo = wm->createPlane({ 3.5, 0, 0 });
+
+	worldLst->push_back(wo);
+
+	//left side plane
+	wm->setPlaneRot({ 0.7071068, 0, 0, 0.7071068 });
+	wo = wm->createPlane({ 0, -5, 0 });
+
+	worldLst->push_back(wo);
+
+	//right side plane
+	wo = wm->createPlane({0, wm->getMax() + 5, 0});
+
+	worldLst->push_back(wo);
 }
 
 
