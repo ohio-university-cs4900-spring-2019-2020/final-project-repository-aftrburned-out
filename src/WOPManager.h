@@ -27,6 +27,12 @@ public:
 	/*This creates a Board at the given postion.
 	Remember to use setBoardRot() before using this to give it a rotation.*/
 	WO* createBoard(Vector pos, std::string path);
+	/*Getter for Min*/
+	float getMin();
+	/*Getter for Max*/
+	float getMax();
+	/*Getter for Height*/
+	float getHeight();
 	/*This creates a Plane at the given postion.
 	Remember to use setPlaneRot() before using this to give it a rotation.*/
 	WO* createPlane(Vector pos);

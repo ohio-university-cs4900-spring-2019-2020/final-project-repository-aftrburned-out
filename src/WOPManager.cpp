@@ -135,3 +135,9 @@ WO* WOPManager::createBoard(Vector pos, std::string path)
 	rz = pos.z;
 	return PachinkoWOP::New(p, scene, path, Vector(1, 1, 1), MESH_SHADING_TYPE::mstFLAT, PachinkoWOP::PxObj::Plane, physx::PxVec3{ rx, ry, rz }, BoardRot);
 }
+
+float WOPManager::getMin() { return min; }
+
+float WOPManager::getMax() { return max; }
+
+float WOPManager::getHeight() { return height; }
