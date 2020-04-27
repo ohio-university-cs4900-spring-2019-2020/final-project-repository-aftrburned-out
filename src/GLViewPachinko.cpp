@@ -143,6 +143,134 @@ void GLViewPachinko::onKeyUp( const SDL_KeyboardEvent& key )
    GLView::onKeyUp( key );
 }
 
+std::vector<Vector> presetOne() {
+	std::vector<Vector> list;
+
+	list.push_back(Vector(0, 0, 5));
+	list.push_back(Vector(0, 5, 5));
+	list.push_back(Vector(0, 10, 5));
+	list.push_back(Vector(0, 15, 5));
+	list.push_back(Vector(0, 20, 5));
+
+	list.push_back(Vector(0, 2.5, 10));
+	list.push_back(Vector(0, 7.5, 10));
+	list.push_back(Vector(0, 12.5, 10));
+	list.push_back(Vector(0, 17.5, 10));
+
+	list.push_back(Vector(0, 0, 15));
+	list.push_back(Vector(0, 5, 15));
+	list.push_back(Vector(0, 10, 15));
+	list.push_back(Vector(0, 15, 15));
+	list.push_back(Vector(0, 20, 15));
+
+	list.push_back(Vector(0, 2.5, 20));
+	list.push_back(Vector(0, 7.5, 20));
+	list.push_back(Vector(0, 12.5, 20));
+	list.push_back(Vector(0, 17.5, 20));
+
+	list.push_back(Vector(0, 0, 25));
+	list.push_back(Vector(0, 5, 25));
+	list.push_back(Vector(0, 10, 25));
+	list.push_back(Vector(0, 15, 25));
+	list.push_back(Vector(0, 20, 25));
+
+	list.push_back(Vector(0, 2.5, 30));
+	list.push_back(Vector(0, 7.5, 30));
+	list.push_back(Vector(0, 12.5, 30));
+	list.push_back(Vector(0, 17.5, 30));
+
+	list.push_back(Vector(0, 0, 35));
+	list.push_back(Vector(0, 5, 35));
+	list.push_back(Vector(0, 10, 35));
+	list.push_back(Vector(0, 15, 35));
+	list.push_back(Vector(0, 20, 35));
+
+	return list;
+}
+
+std::vector<Vector> presetTwo()
+{
+	std::vector<Vector> list;
+
+	list.push_back(Vector(0, 0, 5));
+	list.push_back(Vector(0, 5, 5));
+	list.push_back(Vector(0, 10, 5));
+	list.push_back(Vector(0, 15, 5));
+	list.push_back(Vector(0, 20, 5));
+	list.push_back(Vector(0, 25, 5));
+	list.push_back(Vector(0, 30, 5));
+	list.push_back(Vector(0, 35, 5));
+
+	list.push_back(Vector(0, 2.5, 10));
+	list.push_back(Vector(0, 7.5, 10));
+	list.push_back(Vector(0, 12.5, 10));
+	list.push_back(Vector(0, 17.5, 10));
+	list.push_back(Vector(0, 22.5, 10));
+	list.push_back(Vector(0, 27.5, 10));
+	list.push_back(Vector(0, 32.5, 10));
+
+	list.push_back(Vector(0, 0, 15));
+	list.push_back(Vector(0, 5, 15));
+	list.push_back(Vector(0, 10, 15));
+	list.push_back(Vector(0, 15, 15));
+	list.push_back(Vector(0, 20, 15));
+	list.push_back(Vector(0, 25, 15));
+	list.push_back(Vector(0, 30, 15));
+	list.push_back(Vector(0, 35, 15));
+
+	list.push_back(Vector(0, 2.5, 20));
+	list.push_back(Vector(0, 7.5, 20));
+	list.push_back(Vector(0, 12.5, 20));
+	list.push_back(Vector(0, 17.5, 20));
+	list.push_back(Vector(0, 22.5, 20));
+	list.push_back(Vector(0, 27.5, 20));
+	list.push_back(Vector(0, 32.5, 20));
+
+	list.push_back(Vector(0, 0, 25));
+	list.push_back(Vector(0, 5, 25));
+	list.push_back(Vector(0, 10, 25));
+	list.push_back(Vector(0, 15, 25));
+	list.push_back(Vector(0, 20, 25));
+	list.push_back(Vector(0, 25, 25));
+	list.push_back(Vector(0, 30, 25));
+	list.push_back(Vector(0, 35, 25));
+
+	list.push_back(Vector(0, 2.5, 30));
+	list.push_back(Vector(0, 7.5, 30));
+	list.push_back(Vector(0, 12.5, 30));
+	list.push_back(Vector(0, 17.5, 30));
+	list.push_back(Vector(0, 22.5, 30));
+	list.push_back(Vector(0, 27.5, 30));
+	list.push_back(Vector(0, 32.5, 30));
+
+	list.push_back(Vector(0, 0, 35));
+	list.push_back(Vector(0, 5, 35));
+	list.push_back(Vector(0, 10, 35));
+	list.push_back(Vector(0, 15, 35));
+	list.push_back(Vector(0, 20, 35));
+	list.push_back(Vector(0, 25, 35));
+	list.push_back(Vector(0, 30, 35));
+	list.push_back(Vector(0, 35, 35));
+
+	list.push_back(Vector(0, 2.5, 40));
+	list.push_back(Vector(0, 7.5, 40));
+	list.push_back(Vector(0, 12.5, 40));
+	list.push_back(Vector(0, 17.5, 40));
+	list.push_back(Vector(0, 22.5, 40));
+	list.push_back(Vector(0, 27.5, 40));
+	list.push_back(Vector(0, 32.5, 40));
+
+	list.push_back(Vector(0, 0, 45));
+	list.push_back(Vector(0, 5, 45));
+	list.push_back(Vector(0, 10, 45));
+	list.push_back(Vector(0, 15, 45));
+	list.push_back(Vector(0, 20, 45));
+	list.push_back(Vector(0, 25, 45));
+	list.push_back(Vector(0, 30, 45));
+	list.push_back(Vector(0, 35, 45));
+
+	return list;
+}
 
 void Aftr::GLViewPachinko::loadMap()
 {
@@ -204,11 +332,12 @@ void Aftr::GLViewPachinko::loadMap()
 
    //
    // example of an invisible wall that sits behind the pegs
-   // wm->setPlaneRot({ 0, 0.7071068, 0, 0.7071068 });
-   // wo = wm->createPlane({ -10, 0, 0 });
-   // worldLst->push_back(wo);
+    wm->setPlaneRot({ 0, 0.7071068, 0, 0.7071068 });
+    wo = wm->createPlane({ -3.5, 0, 0 });
+    worldLst->push_back(wo);
    //
 
+   /*
    // test peg placements
    std::vector<Vector> list;
    list.push_back(Vector(0, 0, 5));
@@ -239,11 +368,14 @@ void Aftr::GLViewPachinko::loadMap()
    list.push_back(Vector(0, 16, 35));
    list.push_back(Vector(0, 20, 35));
    list.push_back(Vector(0, 24, 35));
+   */
+
+   std::vector<Vector> list = presetOne();
 
    // to get the rotation angles, use this website:
    // https://www.andre-gaschler.com/rotationconverter/
    // and use the "Euler angles of multiple axis rotations" input
-   wm->setPegRot({ 0, -0.1323518, 0, 0.9912028 });
+   wm->setPegRot({ 0.0864101, -0.1300295, -0.0113761, 0.9876721 });
 
    for (int i = 0; i < list.size(); i++)
    {
