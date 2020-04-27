@@ -118,10 +118,11 @@ WO* WOPManager::createFloor(std::string path)
 	return PachinkoWOP::New(p, scene, path, Vector(1, 1, 1), MESH_SHADING_TYPE::mstFLAT, PachinkoWOP::PxObj::Plane, physx::PxVec3{ 0, 0, 0 }, FloorRot);
 }
 
-void WOPManager::setMinMaxBallPos(float min, float max)
+void WOPManager::setBallBounds(float min, float max, float height)
 {
 	this->min = min;
 	this->max = max;
+	this->height = height;
 }
 
 // Creates the board at the given positon with the given model.
