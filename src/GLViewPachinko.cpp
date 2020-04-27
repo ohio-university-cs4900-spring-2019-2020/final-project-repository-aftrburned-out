@@ -143,56 +143,64 @@ void GLViewPachinko::onKeyUp( const SDL_KeyboardEvent& key )
    GLView::onKeyUp( key );
 }
 
-std::vector<Vector> presetOne()
-{
+std::vector<Vector> presetOne(WOPManager* wm){
 	std::vector<Vector> list;
 
+	//row 1
 	list.push_back(Vector(0, 0, 5));
 	list.push_back(Vector(0, 5, 5));
 	list.push_back(Vector(0, 10, 5));
 	list.push_back(Vector(0, 15, 5));
 	list.push_back(Vector(0, 20, 5));
 
+	//row 2 offset
 	list.push_back(Vector(0, 2.5, 10));
 	list.push_back(Vector(0, 7.5, 10));
 	list.push_back(Vector(0, 12.5, 10));
 	list.push_back(Vector(0, 17.5, 10));
 
+	//row 3
 	list.push_back(Vector(0, 0, 15));
 	list.push_back(Vector(0, 5, 15));
 	list.push_back(Vector(0, 10, 15));
 	list.push_back(Vector(0, 15, 15));
 	list.push_back(Vector(0, 20, 15));
 
+	//row 4 offset
 	list.push_back(Vector(0, 2.5, 20));
 	list.push_back(Vector(0, 7.5, 20));
 	list.push_back(Vector(0, 12.5, 20));
 	list.push_back(Vector(0, 17.5, 20));
 
+	//row 5 
 	list.push_back(Vector(0, 0, 25));
 	list.push_back(Vector(0, 5, 25));
 	list.push_back(Vector(0, 10, 25));
 	list.push_back(Vector(0, 15, 25));
 	list.push_back(Vector(0, 20, 25));
 
+	//row 6 offset
 	list.push_back(Vector(0, 2.5, 30));
 	list.push_back(Vector(0, 7.5, 30));
 	list.push_back(Vector(0, 12.5, 30));
 	list.push_back(Vector(0, 17.5, 30));
 
+	//row 7
 	list.push_back(Vector(0, 0, 35));
 	list.push_back(Vector(0, 5, 35));
 	list.push_back(Vector(0, 10, 35));
 	list.push_back(Vector(0, 15, 35));
 	list.push_back(Vector(0, 20, 35));
 
+	wm->setBallBounds(0, 20, 45);
+
 	return list;
 }
 
-std::vector<Vector> presetTwo()
-{
+std::vector<Vector> presetTwo(WOPManager* wm){
 	std::vector<Vector> list;
 
+	//row 1
 	list.push_back(Vector(0, 0, 5));
 	list.push_back(Vector(0, 5, 5));
 	list.push_back(Vector(0, 10, 5));
@@ -202,6 +210,7 @@ std::vector<Vector> presetTwo()
 	list.push_back(Vector(0, 30, 5));
 	list.push_back(Vector(0, 35, 5));
 
+	//row 2 offset
 	list.push_back(Vector(0, 2.5, 10));
 	list.push_back(Vector(0, 7.5, 10));
 	list.push_back(Vector(0, 12.5, 10));
@@ -210,6 +219,7 @@ std::vector<Vector> presetTwo()
 	list.push_back(Vector(0, 27.5, 10));
 	list.push_back(Vector(0, 32.5, 10));
 
+	//row 3
 	list.push_back(Vector(0, 0, 15));
 	list.push_back(Vector(0, 5, 15));
 	list.push_back(Vector(0, 10, 15));
@@ -219,6 +229,7 @@ std::vector<Vector> presetTwo()
 	list.push_back(Vector(0, 30, 15));
 	list.push_back(Vector(0, 35, 15));
 
+	//row 4 offset
 	list.push_back(Vector(0, 2.5, 20));
 	list.push_back(Vector(0, 7.5, 20));
 	list.push_back(Vector(0, 12.5, 20));
@@ -227,6 +238,7 @@ std::vector<Vector> presetTwo()
 	list.push_back(Vector(0, 27.5, 20));
 	list.push_back(Vector(0, 32.5, 20));
 
+	//row 5
 	list.push_back(Vector(0, 0, 25));
 	list.push_back(Vector(0, 5, 25));
 	list.push_back(Vector(0, 10, 25));
@@ -236,6 +248,7 @@ std::vector<Vector> presetTwo()
 	list.push_back(Vector(0, 30, 25));
 	list.push_back(Vector(0, 35, 25));
 
+	//row 6 offset
 	list.push_back(Vector(0, 2.5, 30));
 	list.push_back(Vector(0, 7.5, 30));
 	list.push_back(Vector(0, 12.5, 30));
@@ -244,6 +257,7 @@ std::vector<Vector> presetTwo()
 	list.push_back(Vector(0, 27.5, 30));
 	list.push_back(Vector(0, 32.5, 30));
 
+	//row 7
 	list.push_back(Vector(0, 0, 35));
 	list.push_back(Vector(0, 5, 35));
 	list.push_back(Vector(0, 10, 35));
@@ -253,6 +267,7 @@ std::vector<Vector> presetTwo()
 	list.push_back(Vector(0, 30, 35));
 	list.push_back(Vector(0, 35, 35));
 
+	//row 8 offset
 	list.push_back(Vector(0, 2.5, 40));
 	list.push_back(Vector(0, 7.5, 40));
 	list.push_back(Vector(0, 12.5, 40));
@@ -261,6 +276,7 @@ std::vector<Vector> presetTwo()
 	list.push_back(Vector(0, 27.5, 40));
 	list.push_back(Vector(0, 32.5, 40));
 
+	//row 9
 	list.push_back(Vector(0, 0, 45));
 	list.push_back(Vector(0, 5, 45));
 	list.push_back(Vector(0, 10, 45));
@@ -270,11 +286,12 @@ std::vector<Vector> presetTwo()
 	list.push_back(Vector(0, 30, 45));
 	list.push_back(Vector(0, 35, 45));
 
+	wm->setBallBounds(0, 35, 55);
+
 	return list;
 }
 
-std::vector<Vector> presetThree()
-{
+std::vector<Vector> presetThree(WOPManager* wm){
 	std::vector<Vector> list;
 
 	//row 1
@@ -452,6 +469,8 @@ std::vector<Vector> presetThree()
 	list.push_back(Vector(0, 45, 65));
 	list.push_back(Vector(0, 50, 65));
 	list.push_back(Vector(0, 55, 65));
+
+	wm->setBallBounds(0, 55, 75);
 
 	return list;
 
