@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GLView.h"
+#include "WOPManager.h"
 
 namespace Aftr
 {
@@ -32,10 +33,13 @@ public:
    virtual void onMouseMove( const SDL_MouseMotionEvent& e );
    virtual void onKeyDown( const SDL_KeyboardEvent& key );
    virtual void onKeyUp( const SDL_KeyboardEvent& key );
+   virtual void setBoardState();
 
 protected:
    GLViewPachinko( const std::vector< std::string >& args );
-   virtual void onCreate();   
+   virtual void onCreate();
+private:
+	WOPManager* wm;
 };
 
 /** \} */
