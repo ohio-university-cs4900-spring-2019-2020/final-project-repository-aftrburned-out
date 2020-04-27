@@ -42,7 +42,7 @@
 
 using namespace Aftr;
 
-std::string comicSans(ManagerEnvironmentConfiguration::getSMM() + "/fonts/TREBUC.ttf");
+std::string trebuc(ManagerEnvironmentConfiguration::getSMM() + "/fonts/TREBUC.ttf");
 
 GLViewPachinko* GLViewPachinko::New( const std::vector< std::string >& args )
 {
@@ -99,7 +99,7 @@ void GLViewPachinko::onCreate()
    label->setFontSize(30); //font size is correlated with world size
    label->setPosition(Vector(0, 1, 0));
    label->setFontOrientation(FONT_ORIENTATION::foLEFT_TOP);
-   label->setFontPath(comicSans);
+   label->setFontPath(trebuc);
    worldLst->push_back(label);
 }
 
