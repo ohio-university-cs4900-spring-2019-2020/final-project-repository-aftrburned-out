@@ -143,7 +143,8 @@ void GLViewPachinko::onKeyUp( const SDL_KeyboardEvent& key )
    GLView::onKeyUp( key );
 }
 
-std::vector<Vector> presetOne() {
+std::vector<Vector> presetOne()
+{
 	std::vector<Vector> list;
 
 	list.push_back(Vector(0, 0, 5));
@@ -272,6 +273,190 @@ std::vector<Vector> presetTwo()
 	return list;
 }
 
+std::vector<Vector> presetThree()
+{
+	std::vector<Vector> list;
+
+	//row 1
+	list.push_back(Vector(0, 0, 5));
+	list.push_back(Vector(0, 5, 5));
+	list.push_back(Vector(0, 10, 5));
+	list.push_back(Vector(0, 15, 5));
+	list.push_back(Vector(0, 20, 5));
+	list.push_back(Vector(0, 25, 5));
+	list.push_back(Vector(0, 30, 5));
+	list.push_back(Vector(0, 35, 5));
+	list.push_back(Vector(0, 40, 5));
+	list.push_back(Vector(0, 45, 5));
+	list.push_back(Vector(0, 50, 5));
+	list.push_back(Vector(0, 55, 5));
+
+	//row 2 offset
+	list.push_back(Vector(0, 2.5, 10));
+	list.push_back(Vector(0, 7.5, 10));
+	list.push_back(Vector(0, 12.5, 10));
+	list.push_back(Vector(0, 17.5, 10));
+	list.push_back(Vector(0, 22.5, 10));
+	list.push_back(Vector(0, 27.5, 10));
+	list.push_back(Vector(0, 32.5, 10));
+	list.push_back(Vector(0, 37.5, 10));
+	list.push_back(Vector(0, 42.5, 10));
+	list.push_back(Vector(0, 47.5, 10));
+	list.push_back(Vector(0, 52.5, 10));
+
+	//row 3
+	list.push_back(Vector(0, 0, 15));
+	list.push_back(Vector(0, 5, 15));
+	list.push_back(Vector(0, 10, 15));
+	list.push_back(Vector(0, 15, 15));
+	list.push_back(Vector(0, 20, 15));
+	list.push_back(Vector(0, 25, 15));
+	list.push_back(Vector(0, 30, 15));
+	list.push_back(Vector(0, 35, 15));
+	list.push_back(Vector(0, 40, 15));
+	list.push_back(Vector(0, 45, 15));
+	list.push_back(Vector(0, 50, 15));
+	list.push_back(Vector(0, 55, 15));
+
+	//row 4 offset
+	list.push_back(Vector(0, 2.5, 20));
+	list.push_back(Vector(0, 7.5, 20));
+	list.push_back(Vector(0, 12.5, 20));
+	list.push_back(Vector(0, 17.5, 20));
+	list.push_back(Vector(0, 22.5, 20));
+	list.push_back(Vector(0, 27.5, 20));
+	list.push_back(Vector(0, 32.5, 20));
+	list.push_back(Vector(0, 37.5, 20));
+	list.push_back(Vector(0, 42.5, 20));
+	list.push_back(Vector(0, 47.5, 20));
+	list.push_back(Vector(0, 52.5, 20));
+
+	//row 5 
+	list.push_back(Vector(0, 0, 25));
+	list.push_back(Vector(0, 5, 25));
+	list.push_back(Vector(0, 10, 25));
+	list.push_back(Vector(0, 15, 25));
+	list.push_back(Vector(0, 20, 25));
+	list.push_back(Vector(0, 25, 25));
+	list.push_back(Vector(0, 30, 25));
+	list.push_back(Vector(0, 35, 25));
+	list.push_back(Vector(0, 40, 25));
+	list.push_back(Vector(0, 45, 25));
+	list.push_back(Vector(0, 50, 25));
+	list.push_back(Vector(0, 55, 25));
+
+	//row 6 offset
+	list.push_back(Vector(0, 2.5, 30));
+	list.push_back(Vector(0, 7.5, 30));
+	list.push_back(Vector(0, 12.5, 30));
+	list.push_back(Vector(0, 17.5, 30));
+	list.push_back(Vector(0, 22.5, 30));
+	list.push_back(Vector(0, 27.5, 30));
+	list.push_back(Vector(0, 32.5, 30));
+	list.push_back(Vector(0, 37.5, 30));
+	list.push_back(Vector(0, 42.5, 30));
+	list.push_back(Vector(0, 47.5, 30));
+	list.push_back(Vector(0, 52.5, 30));
+
+	//row 7
+	list.push_back(Vector(0, 0, 35));
+	list.push_back(Vector(0, 5, 35));
+	list.push_back(Vector(0, 10, 35));
+	list.push_back(Vector(0, 15, 35));
+	list.push_back(Vector(0, 20, 35));
+	list.push_back(Vector(0, 25, 35));
+	list.push_back(Vector(0, 30, 35));
+	list.push_back(Vector(0, 35, 35));
+	list.push_back(Vector(0, 40, 35));
+	list.push_back(Vector(0, 45, 35));
+	list.push_back(Vector(0, 50, 35));
+	list.push_back(Vector(0, 55, 35));
+
+	//row 8 offset
+	list.push_back(Vector(0, 2.5, 40));
+	list.push_back(Vector(0, 7.5, 40));
+	list.push_back(Vector(0, 12.5, 40));
+	list.push_back(Vector(0, 17.5, 40));
+	list.push_back(Vector(0, 22.5, 40));
+	list.push_back(Vector(0, 27.5, 40));
+	list.push_back(Vector(0, 32.5, 40));
+	list.push_back(Vector(0, 37.5, 40));
+	list.push_back(Vector(0, 42.5, 40));
+	list.push_back(Vector(0, 47.5, 40));
+	list.push_back(Vector(0, 52.5, 40));
+
+	//row 9
+	list.push_back(Vector(0, 0, 45));
+	list.push_back(Vector(0, 5, 45));
+	list.push_back(Vector(0, 10, 45));
+	list.push_back(Vector(0, 15, 45));
+	list.push_back(Vector(0, 20, 45));
+	list.push_back(Vector(0, 25, 45));
+	list.push_back(Vector(0, 30, 45));
+	list.push_back(Vector(0, 35, 45));
+	list.push_back(Vector(0, 40, 45));
+	list.push_back(Vector(0, 45, 45));
+	list.push_back(Vector(0, 50, 45));
+	list.push_back(Vector(0, 55, 45));
+
+	//row 10 offset
+	list.push_back(Vector(0, 2.5, 50));
+	list.push_back(Vector(0, 7.5, 50));
+	list.push_back(Vector(0, 12.5, 50));
+	list.push_back(Vector(0, 17.5, 50));
+	list.push_back(Vector(0, 22.5, 50));
+	list.push_back(Vector(0, 27.5, 50));
+	list.push_back(Vector(0, 32.5, 50));
+	list.push_back(Vector(0, 37.5, 50));
+	list.push_back(Vector(0, 42.5, 50));
+	list.push_back(Vector(0, 47.5, 50));
+	list.push_back(Vector(0, 52.5, 50));
+
+	//row 11
+	list.push_back(Vector(0, 0, 55));
+	list.push_back(Vector(0, 5, 55));
+	list.push_back(Vector(0, 10, 55));
+	list.push_back(Vector(0, 15, 55));
+	list.push_back(Vector(0, 20, 55));
+	list.push_back(Vector(0, 25, 55));
+	list.push_back(Vector(0, 30, 55));
+	list.push_back(Vector(0, 35, 55));
+	list.push_back(Vector(0, 40, 55));
+	list.push_back(Vector(0, 45, 55));
+	list.push_back(Vector(0, 50, 55));
+	list.push_back(Vector(0, 55, 55));
+
+	//row 12 offset
+	list.push_back(Vector(0, 2.5, 60));
+	list.push_back(Vector(0, 7.5, 60));
+	list.push_back(Vector(0, 12.5, 60));
+	list.push_back(Vector(0, 17.5, 60));
+	list.push_back(Vector(0, 22.5, 60));
+	list.push_back(Vector(0, 27.5, 60));
+	list.push_back(Vector(0, 32.5, 60));
+	list.push_back(Vector(0, 37.5, 60));
+	list.push_back(Vector(0, 42.5, 60));
+	list.push_back(Vector(0, 47.5, 60));
+	list.push_back(Vector(0, 52.5, 60));
+
+	//row 13
+	list.push_back(Vector(0, 0, 65));
+	list.push_back(Vector(0, 5, 65));
+	list.push_back(Vector(0, 10, 65));
+	list.push_back(Vector(0, 15, 65));
+	list.push_back(Vector(0, 20, 65));
+	list.push_back(Vector(0, 25, 65));
+	list.push_back(Vector(0, 30, 65));
+	list.push_back(Vector(0, 35, 65));
+	list.push_back(Vector(0, 40, 65));
+	list.push_back(Vector(0, 45, 65));
+	list.push_back(Vector(0, 50, 65));
+	list.push_back(Vector(0, 55, 65));
+
+	return list;
+
+}
+
 void Aftr::GLViewPachinko::loadMap()
 {
 	// create the WOP Manager
@@ -337,40 +522,8 @@ void Aftr::GLViewPachinko::loadMap()
     worldLst->push_back(wo);
    //
 
-   /*
-   // test peg placements
-   std::vector<Vector> list;
-   list.push_back(Vector(0, 0, 5));
-   list.push_back(Vector(0, 4, 5));
-   list.push_back(Vector(0, 8, 5));
-   list.push_back(Vector(0, 12, 5));
-   list.push_back(Vector(0, 16, 5));
-   list.push_back(Vector(0, 20, 5));
-   list.push_back(Vector(0, 24, 5));
-   list.push_back(Vector(0, 0, 15));
-   list.push_back(Vector(0, 4, 15));
-   list.push_back(Vector(0, 8, 15));
-   list.push_back(Vector(0, 12, 15));
-   list.push_back(Vector(0, 16, 15));
-   list.push_back(Vector(0, 20, 15));
-   list.push_back(Vector(0, 24, 15));
-   list.push_back(Vector(0, 0, 25));
-   list.push_back(Vector(0, 4, 25));
-   list.push_back(Vector(0, 8, 25));
-   list.push_back(Vector(0, 12, 25));
-   list.push_back(Vector(0, 16, 25));
-   list.push_back(Vector(0, 20, 25));
-   list.push_back(Vector(0, 24, 25));
-   list.push_back(Vector(0, 0, 35));
-   list.push_back(Vector(0, 4, 35));
-   list.push_back(Vector(0, 8, 35));
-   list.push_back(Vector(0, 12, 35));
-   list.push_back(Vector(0, 16, 35));
-   list.push_back(Vector(0, 20, 35));
-   list.push_back(Vector(0, 24, 35));
-   */
 
-   std::vector<Vector> list = presetOne();
+   std::vector<Vector> list = presetThree();
 
    // to get the rotation angles, use this website:
    // https://www.andre-gaschler.com/rotationconverter/
