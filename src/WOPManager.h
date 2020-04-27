@@ -19,12 +19,17 @@ public:
 	void setFloorRot(PxQuat in);
 	/*This sets the WOPManager's initial Board placement's Rotation*/
 	void setBoardRot(PxQuat in);
+	/*This sets the WOPManager's initial Plane placement's Rotation*/
+	void setPlaneRot(PxQuat in);
 	/*This creates a Floor at the given postion.
 	Remember to use setFloorRot() before using this to give it a rotation.*/
 	WO* createFloor(std::string path);
 	/*This creates a Board at the given postion.
 	Remember to use setBoardRot() before using this to give it a rotation.*/
 	WO* createBoard(Vector pos, std::string path);
+	/*This creates a Plane at the given postion.
+	Remember to use setPlaneRot() before using this to give it a rotation.*/
+	WO* createPlane(Vector pos);
 	/*DO NOT USE*/
 	WO* __createPachinkoBall();
 	/*Creates a Pachinko Ball at the position specified*/
@@ -43,5 +48,6 @@ protected:
 	PxQuat PegRot;
 	PxQuat FloorRot;
 	PxQuat BoardRot;
+	PxQuat PlaneRot;
 	//PxCooking* cook;
 };

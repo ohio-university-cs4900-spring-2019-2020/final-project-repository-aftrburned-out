@@ -192,7 +192,8 @@ void Aftr::GLViewPachinko::loadMap()
   
 
    ////Create the infinite grass plane that uses NVIDIAPhysX(the floor)
-   wo = wm->createFloor(grass);
+   wm->setPlaneRot({ 0, 0, 0, 1 });
+   wo = wm->createPlane({ 0, 0, 0 });
    //PachinkoWOP::New(p, scene, grass, Vector(1,1,1), MESH_SHADING_TYPE::mstFLAT, PachinkoWOP::PxObj::Floor, physx::PxVec3{ 0, 0, 0 });
    wo->setPosition( Vector(0,0,0) );
    wo->renderOrderType = RENDER_ORDER_TYPE::roOPAQUE;
@@ -200,6 +201,13 @@ void Aftr::GLViewPachinko::loadMap()
    wo->setLabel( "Grass" );
    worldLst->push_back( wo );
    //createPachinkoWayPoints();
+
+   //
+   // example of an invisible wall that sits behind the pegs
+   // wm->setPlaneRot({ 0, 0.7071068, 0, 0.7071068 });
+   // wo = wm->createPlane({ -10, 0, 0 });
+   // worldLst->push_back(wo);
+   //
 
    // test peg placements
    std::vector<Vector> list;

@@ -63,6 +63,12 @@ void WOPManager::setBoardRot(PxQuat in)
 	BoardRot = in;
 }
 
+// This sets the WOPManager's initial Plane placement's Rotation 
+void WOPManager::setPlaneRot(PxQuat in)
+{
+	PlaneRot = in;
+}
+
 // This creates a Pachinko Peg at the given postion.
 // Remember to use setPegRot() before using this to give it a rotation.
 WO* WOPManager::createPachinkoPeg(Vector pos)
@@ -70,6 +76,15 @@ WO* WOPManager::createPachinkoPeg(Vector pos)
 	PachinkoWOP* wo = PachinkoWOP::New(p, scene, (ManagerEnvironmentConfiguration::getSMM() + "/models/WOTeapot/cylinder/cylinder.3ds"), { .25, .25, .5 }, MESH_SHADING_TYPE::mstFLAT, PachinkoWOP::PxObj::Peg, { pos.x, pos.y, pos.z }, PegRot);
 	wo->setPosition(pos);
 	return wo;
+}
+
+WO* WOPManager::createPlane(Vector pos)
+{
+	float rx, ry, rz = 0;
+	rx = pos.x;
+	ry = pos.y;
+	rz = pos.z;
+	return PachinkoWOP::New(p, scene, (ManagerEnvironmentConfiguration::getSMM() + "/models/grassFloor400x400_pp.wrl"), Vector(0, 0, 0), MESH_SHADING_TYPE::mstFLAT, PachinkoWOP::PxObj::Plane, physx::PxVec3{ rx, ry, rz }, PlaneRot);
 }
 
 // Do not use this, it is only to test
