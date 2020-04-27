@@ -37,6 +37,8 @@ public:
 	/*This creates a Pachinko Peg at the given postion.
 	Remember to use setPegRot() before using this to give it a rotation.*/
 	WO* createPachinkoPeg(Vector pos);
+	/*This sets the min and max y values that the Pachinko ball can spawn*/
+	void setMinMaxBallPos(float min, float max);
 protected:
 	PxDefaultAllocator a;
 	PxDefaultErrorCallback e;
@@ -49,5 +51,7 @@ protected:
 	PxQuat FloorRot;
 	PxQuat BoardRot;
 	PxQuat PlaneRot;
+	float max;
+	float min;
 	//PxCooking* cook;
 };

@@ -92,9 +92,9 @@ WO* WOPManager::__createPachinkoBall()
 {
 	float rx, ry = 0;
 	rx = 0;//rand() % 5;
-	ry = 10 + rand() % 5;
+	ry = 10 + rand() % 25;
 	
-	return createPachinkoBall({ rx, ry, 50.0 });
+	return createPachinkoBall({ rx, ry, 75.0 });
 
 }
 
@@ -116,6 +116,12 @@ WO* WOPManager::createPachinkoBall(Vector pos)
 WO* WOPManager::createFloor(std::string path)
 {
 	return PachinkoWOP::New(p, scene, path, Vector(1, 1, 1), MESH_SHADING_TYPE::mstFLAT, PachinkoWOP::PxObj::Plane, physx::PxVec3{ 0, 0, 0 }, FloorRot);
+}
+
+void WOPManager::setMinMaxBallPos(float min, float max)
+{
+	this->min = min;
+	this->max = max;
 }
 
 // Creates the board at the given positon with the given model.
