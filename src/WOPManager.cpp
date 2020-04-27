@@ -92,7 +92,7 @@ WO* WOPManager::__createPachinkoBall()
 {
 	float rx, ry = 0;
 	rx = 0;//rand() % 5;
-	ry = 10 + rand() % 25;
+	ry = min + rand() % int(floor(max));
 	
 	return createPachinkoBall({ rx, ry, 75.0 });
 
