@@ -93,7 +93,7 @@ void GLViewPachinko::createGUI() {
 	worldLst->push_back(medBoard);
 
 	WOGUILabel* lrgBoard = WOGUILabel::New(nullptr);
-	lrgBoard->setText(" 3- Large Board");
+	lrgBoard->setText(" 3- Hard Board");
 	lrgBoard->setColor(255, 255, 255, 255);
 	lrgBoard->setFontSize(15); //font size is correlated with world size
 	lrgBoard->setPosition(Vector(0, 0.92, 0));
