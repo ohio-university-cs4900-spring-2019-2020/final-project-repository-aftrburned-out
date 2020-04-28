@@ -11,8 +11,7 @@ namespace Aftr
    class Camera;
 
 /**
-   \class GLViewPachinko
-   \author Scott Nykl 
+   \class GLViewPachinko 
    \brief A child of an abstract GLView. This class is the top-most manager of the module.
 
    Read \see GLView for important constructor and init information.

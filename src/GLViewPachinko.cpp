@@ -45,14 +45,14 @@ GLViewPachinko* GLViewPachinko::New( const std::vector< std::string >& args )
 {
    GLViewPachinko* glv = new GLViewPachinko( args );
    glv->init( Aftr::GRAVITY, Vector( 0, 0, -1.0f ), "aftr.conf", PHYSICS_ENGINE_TYPE::petODE );
+   glv->score = 0;
    glv->onCreate();
    glv->started = false;
    glv->ballOut = false;
-   glv->score = 0;
+   
 
    return glv;
 }
-
 
 GLViewPachinko::GLViewPachinko( const std::vector< std::string >& args ) : GLView( args )
 {
@@ -132,16 +132,11 @@ void GLViewPachinko::createGUI() {
 	scoreLabel->setText("Score: " + std::to_string(score));
 	scoreLabel->setColor(255, 255, 255, 255);
 	scoreLabel->setFontSize(25); //font size is correlated with world size
-<<<<<<< HEAD
-	scoreLabel->setPosition(Vector(0, -1, 0));
-=======
 	scoreLabel->setPosition(Vector(0.99, 0.98, 0));
->>>>>>> 6feac679f69a8f28c22e6efce4791c7f05d817c3
 	scoreLabel->setFontOrientation(FONT_ORIENTATION::foRIGHT_TOP);
 	scoreLabel->setFontPath(trebuc);
 	worldLst->push_back(scoreLabel);
 }
-
 
 void GLViewPachinko::onCreate()
 {
@@ -178,7 +173,7 @@ void GLViewPachinko::updateWorld()
 
    WO* ball = wm->getBall();
    // if ball is out AND ball is below z = 4
-   if (ballOut && ball->getPosition().z < 4.0)
+   if (ball != nullptr && ballOut && ball->getPosition().z < 4.0)
    {
 	   // if ball is sleeping
 	   if (((PxRigidDynamic*)((PachinkoWOP*)ball)->getActor())->isSleeping())
@@ -299,6 +294,7 @@ void GLViewPachinko::onKeyDown( const SDL_KeyboardEvent& key )
    {
 	   //this->resetEngine(); // this doesn't work with physx
 	   worldLst->clear();
+	   wm->setBall(nullptr);
 	   
 	   WO* wo = WOSkyBox::New((ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_Hubble_Nebula+6.jpg"), this->getCameraPtrPtr());
 	   wo->setPosition(Vector(0, 0, 0));
@@ -307,6 +303,10 @@ void GLViewPachinko::onKeyDown( const SDL_KeyboardEvent& key )
 	   worldLst->push_back(wo);
 
 	   started = false;
+	   
+	   score = 0;
+	   updateScore(0);
+	   
    }
    if (ballOut && key.keysym.sym == SDLK_e)
    {
