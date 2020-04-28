@@ -567,7 +567,7 @@ void Aftr::GLViewPachinko::loadMap()
 void GLViewPachinko::setBoardState() {
 
 	//style for the background board
-	std::string board(ManagerEnvironmentConfiguration::getSMM() + "/models/grassFloor400x400_pp.wrl");
+	std::string board(ManagerEnvironmentConfiguration::getLMM() + "../models/finally.obj");
 
 	//this is the background board
 	wm->setBoardRot({ 0, 0.7071068, 0, 0.7071068 });

@@ -105,7 +105,7 @@ WO* WOPManager::createPachinkoBall(Vector pos)
 	rx = pos.x;
 	ry = pos.y;
 	rz = pos.z;
-	PachinkoWOP* wo = PachinkoWOP::New(p, scene, (ManagerEnvironmentConfiguration::getSMM() + "/models/dice_twelveside_outline.wrl"), { 1, 1, 1 }, Aftr::MESH_SHADING_TYPE::mstAUTO, PachinkoWOP::PxObj::Ball, physx::PxVec3{ rx, ry, rz }, PegRot);
+	PachinkoWOP* wo = PachinkoWOP::New(p, scene, (ManagerEnvironmentConfiguration::getLMM() + "../models/ball.obj"), { 1, 1, 1 }, Aftr::MESH_SHADING_TYPE::mstAUTO, PachinkoWOP::PxObj::Ball, physx::PxVec3{ rx, ry, rz }, PegRot);
 
 	wo->setPosition({ rx, ry, 25 });
 	return wo;
