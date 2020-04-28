@@ -11,7 +11,7 @@ class PachinkoWOP : public Aftr::WO
 public:
 	//WOMacroDeclaration(PachinkoWOP, WO);
 	// enum to pass to PackingoWOP::New allowing the user to create a specific type of WOP;
-	enum PxObj { Plane, Ball, Peg };
+	enum PxObj { Plane, Ball, Peg, Bucket };
 	static PachinkoWOP* New(physx::PxPhysics* p, physx::PxScene* s, const std::string& path, Aftr::Vector scale, Aftr::MESH_SHADING_TYPE mst, PxObj ty, physx::PxVec3 pos, physx::PxQuat& rot);
 	static PxActor* getPxActor(physx::PxPhysics* p);
 	//static PachinkoWOP* createPeg();
