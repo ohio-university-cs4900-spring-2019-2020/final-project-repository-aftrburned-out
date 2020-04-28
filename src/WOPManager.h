@@ -55,6 +55,8 @@ public:
 	void setBucketVals(std::vector<int> vals);
 	/*Gets the Bucket Values*/
 	std::vector<int> getBucketVals();
+	/*Changes the PhysX Scene*/
+	void changeScene();
 protected:
 	PxDefaultAllocator a;
 	PxDefaultErrorCallback e;

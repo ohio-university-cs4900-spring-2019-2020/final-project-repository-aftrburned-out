@@ -174,3 +174,17 @@ std::vector<int> WOPManager::getBucketVals()
 {
 	return bucketVals;
 }
+
+void WOPManager::changeScene()
+{
+	scene->release(); // remove all objects from scene first
+
+	PxSceneDesc s(p->getTolerancesScale());
+	s.gravity = PxVec3(0.0f, 0.0f, -5.0f);
+	s.flags = PxSceneFlag::eENABLE_ACTIVE_ACTORS;
+	d = PxDefaultCpuDispatcherCreate(2);
+	s.cpuDispatcher = d;
+	s.filterShader = PxDefaultSimulationFilterShader;
+
+	scene = p->createScene(s);
+}
