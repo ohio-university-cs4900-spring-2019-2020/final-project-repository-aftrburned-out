@@ -535,16 +535,16 @@ void Aftr::GLViewPachinko::loadMap()
 
    //
    // example of an invisible wall that sits behind the pegs
-   wm->setPlaneRot({ 0, 0.7071068, 0, 0.7071068 });
-   wo = wm->createPlane({ -3.5, 0, 0 });
-   worldLst->push_back(wo);
-   wm->setPlaneRot({ 0.7071068, 0, 0, 0.7071068 });
-   wo = wm->createPlane({ 0, -5, 0 });
-   worldLst->push_back(wo);
+   // wm->setPlaneRot({ 0, 0.7071068, 0, 0.7071068 });
+   // wo = wm->createPlane({ -3.5, 0, 0 });
+   // worldLst->push_back(wo);
+   // wm->setPlaneRot({ 0.7071068, 0, 0, 0.7071068 });
+   // wo = wm->createPlane({ 0, -5, 0 });
+   // worldLst->push_back(wo);
    //
 
 
-   std::vector<Vector> list = presetThree();
+   std::vector<Vector> list = presetThree(wm);
 
    // to get the rotation angles, use this website:
    // https://www.andre-gaschler.com/rotationconverter/
