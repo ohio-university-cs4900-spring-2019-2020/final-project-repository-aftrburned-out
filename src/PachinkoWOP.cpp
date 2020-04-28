@@ -65,6 +65,12 @@ void PachinkoWOP::onCreate(const std::string& path, const Aftr::Vector& scale, A
 		a = p->createRigidStatic(t);
 		break;
 	}
+	case Bucket:
+	{
+		shape = p->createShape(PxBoxGeometry(2, 5, .5), *gMaterial, true);
+		a = p->createRigidStatic(t);
+		break;
+	}
 	default: 
 	{
 		std::cerr << "Default case in PachinkoWOP OnCreate!" << std::endl;
@@ -79,7 +85,7 @@ void PachinkoWOP::onCreate(const std::string& path, const Aftr::Vector& scale, A
 	a->attachShape(*shape);
 	a->userData = this;
 	this->s->addActor(*a);
-
+	
 	//initial physics update (runs for static actors too)
 	PachinkoWOP* wo = static_cast<PachinkoWOP*>(a->userData);
 	wo->updatePoseFromPhysicsEngine(a);
@@ -107,21 +113,44 @@ void PachinkoWOP::updatePoseFromPhysicsEngine(physx::PxActor* actor)
 	// position
 	setPosition({ lt.p.x, lt.p.y, lt.p.z });
 
+
+
 	// rotation
-	PxMat44 m = PxMat44(lt);
-
-	float info[16];
-
-	for (int i = 0; i < 16; i++)
-	{
-		info[i] = m[i / 4][i % 4];
-	}
-
-	setRotation(info);
 	if (this->t == Peg)
 	{
 		this->rotateAboutGlobalY(Aftr::DEGtoRAD * 90);
 	}
+	else
+	{
+		PxMat44 m = PxMat44(lt);
+
+		float info[16];
+
+		for (int i = 0; i < 16; i++)
+		{
+			info[i] = m[i / 4][i % 4];
+		}
+
+		setRotation(info);
+	}
+}
+
+PxActor* PachinkoWOP::getActor()
+{
+	return a;
+}
+
+PachinkoWOP::~PachinkoWOP()
+{
+	//if (a != nullptr && a->isReleasable())
+	//{
+	//	a->release();
+	//}
+	//s->removeActor(*a);
+	this->p = nullptr;
+	this->s = nullptr;
+	this->a = nullptr;
+	this->shape = nullptr;
 }
 
 void PachinkoWOP::setPosition(Aftr::Vector v)

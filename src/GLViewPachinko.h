@@ -2,14 +2,17 @@
 
 #include "GLView.h"
 #include "WOPManager.h"
+#include "WOFTGLString.h"
+#include "MGLFTGLString.h"
+#include "WOGUILabel.h"
+#include "soundMngr.h"
 
 namespace Aftr
 {
    class Camera;
 
 /**
-   \class GLViewPachinko
-   \author Scott Nykl 
+   \class GLViewPachinko 
    \brief A child of an abstract GLView. This class is the top-most manager of the module.
 
    Read \see GLView for important constructor and init information.
@@ -34,16 +37,28 @@ public:
    virtual void onKeyDown( const SDL_KeyboardEvent& key );
    virtual void onKeyUp( const SDL_KeyboardEvent& key );
    virtual void setBoardState(Vector scale);
-   virtual std::vector<Vector> presetOne(WOPManager* wm);
-   virtual std::vector<Vector> presetTwo(WOPManager* wm);
-   virtual std::vector<Vector> presetThree(WOPManager* wm);
+   virtual std::vector<Vector> presetOne();
+   virtual std::vector<Vector> presetTwo();
+   virtual std::vector<Vector> presetThree();
+   virtual void createField(int preset);
+   virtual void createBucketFonts(std::vector<int>);
+   virtual void kill();
+   virtual void eraseBall();
+   virtual void updateScore(int toAdd);
+   virtual void createGUI();
+   enum presets{SMALL = 1, MEDIUM = 2, LARGE = 3};
+
 
 protected:
    GLViewPachinko( const std::vector< std::string >& args );
    virtual void onCreate();
-
+   bool started;
+   bool ballOut;
 private:
 	WOPManager* wm;
+	int score;
+	WOGUILabel* scoreLabel;
+    SoundMngr* snd;
 };
 
 /** \} */

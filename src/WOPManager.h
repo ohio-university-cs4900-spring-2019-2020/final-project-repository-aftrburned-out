@@ -12,6 +12,7 @@ class WOPManager
 {
 public:
 	WOPManager();
+	~WOPManager();
 	void updatePhysics();
 	/*This sets the WOPManager's initial Peg placement's Rotation*/
 	void setPegRot(PxQuat in);
@@ -43,8 +44,24 @@ public:
 	/*This creates a Pachinko Peg at the given postion.
 	Remember to use setPegRot() before using this to give it a rotation.*/
 	WO* createPachinkoPeg(Vector pos);
+	/*This creates a Pachinko Bucket Wall at the given postion.*/
+	WO* createBucket(Vector pos);
 	/*This sets the min and max y values and height that the Pachinko ball can spawn*/
 	void setBallBounds(float min, float max, float height);
+	/*Sets the size of the board*/
+	void setSize(int s);
+	/*Gets the size of the board*/
+	int getSize();
+	/*Sets the Bucket Values*/
+	void setBucketVals(std::vector<int> vals);
+	/*Gets the Bucket Values*/
+	std::vector<int> getBucketVals();
+	/*Changes the PhysX Scene*/
+	void changeScene();
+	/*Sets the current ball*/
+	void setBall(WO* wo);
+	/*Gets the current ball*/
+	WO* getBall();
 protected:
 	PxDefaultAllocator a;
 	PxDefaultErrorCallback e;
@@ -60,5 +77,8 @@ protected:
 	float max;
 	float min;
 	float height;
+	int size;
+	std::vector<int> bucketVals;
+	WO* ball;
 	//PxCooking* cook;
 };

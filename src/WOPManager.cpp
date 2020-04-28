@@ -24,6 +24,19 @@ WOPManager::WOPManager()
 	BoardRot = { 0,0,0,1 };
 
 	srand(time(NULL)); //seed rand
+	ball = nullptr;
+}
+
+WOPManager::~WOPManager()
+{
+	if (ball != nullptr)
+	{
+		((PachinkoWOP*)ball)->getActor()->release();
+	}
+	f->release();
+	p->release();
+	gPvd->release();
+	d->release();
 }
 
 void WOPManager::updatePhysics()
@@ -115,7 +128,10 @@ WO* WOPManager::createPachinkoBall(Vector pos)
 // Remember to use setPlaneRot() before using this to give it a rotation.
 WO* WOPManager::createFloor(std::string path)
 {
-	return PachinkoWOP::New(p, scene, path, Vector(1, 1, 1), MESH_SHADING_TYPE::mstFLAT, PachinkoWOP::PxObj::Plane, physx::PxVec3{ 0, 0, 0 }, FloorRot);
+	WO* wo = PachinkoWOP::New(p, scene, path, Vector(200, 30, .1), MESH_SHADING_TYPE::mstFLAT, PachinkoWOP::PxObj::Plane, physx::PxVec3{ 0, 0, 0 }, FloorRot);
+	wo->rotateAboutGlobalZ(90 * Aftr::DEGtoRAD);
+	wo->setPosition(0, 15, 0);
+	return wo;
 }
 
 void WOPManager::setBallBounds(float min, float max, float height)
@@ -138,8 +154,62 @@ WO* WOPManager::createBoard(Vector pos, std::string path, Vector scale)
 	return wo;
 }
 
+WO* WOPManager::createBucket(Vector pos)
+{
+	float rx, ry, rz = 0;
+	rx = pos.x;
+	ry = pos.y;
+	rz = pos.z;
+	WO* wo = PachinkoWOP::New(p, scene, (ManagerEnvironmentConfiguration::getLMM() + "/models/divider.obj"), { 2, .5, 1.1 }, MESH_SHADING_TYPE::mstFLAT, PachinkoWOP::PxObj::Bucket, physx::PxVec3{ rx, ry, rz }, PxQuat(0.7071068, 0, 0, 0.7071068));
+	wo->rotateAboutGlobalX(90 * Aftr::DEGtoRAD);
+	wo->rotateAboutGlobalZ(180 * Aftr::DEGtoRAD);
+
+	return wo;
+}
+
+
 float WOPManager::getMin() { return min; }
 
 float WOPManager::getMax() { return max; }
 
 float WOPManager::getHeight() { return height; }
+
+void WOPManager::setSize(int s) { size = s; }
+
+int WOPManager::getSize() { return size; }
+
+void WOPManager::setBucketVals(std::vector<int> vals)
+{
+	bucketVals = vals;
+}
+
+std::vector<int> WOPManager::getBucketVals()
+{
+	return bucketVals;
+}
+
+void WOPManager::changeScene()
+{
+	ball = nullptr;
+	
+	scene->release(); // remove all objects from scene first
+
+	PxSceneDesc s(p->getTolerancesScale());
+	s.gravity = PxVec3(0.0f, 0.0f, -5.0f);
+	s.flags = PxSceneFlag::eENABLE_ACTIVE_ACTORS;
+	d = PxDefaultCpuDispatcherCreate(2);
+	s.cpuDispatcher = d;
+	s.filterShader = PxDefaultSimulationFilterShader;
+
+	scene = p->createScene(s);
+}
+
+void WOPManager::setBall(WO* wo)
+{
+	ball = wo;
+}
+
+WO* WOPManager::getBall()
+{
+	return ball;
+}
