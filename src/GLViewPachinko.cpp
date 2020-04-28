@@ -131,10 +131,6 @@ void GLViewPachinko::onKeyDown( const SDL_KeyboardEvent& key )
    {	
 	   worldLst->push_back(wm->__createPachinkoBall());
    }
-   if (key.keysym.sym == SDLK_2)
-   {
-	   worldLst->push_back(wm->createPachinkoPeg({ 0, 0, 5 }));
-   }
 }
 
 void GLViewPachinko::onKeyUp( const SDL_KeyboardEvent& key )
@@ -192,6 +188,7 @@ std::vector<Vector> GLViewPachinko::presetOne(WOPManager* wm){
 	list.push_back(Vector(0, 20, 35));
 
 	wm->setBallBounds(0, 20, 45);
+	wm->setSize(5);
 
 	setBoardState(Vector(1.5, 1, 0.9));
 
@@ -288,6 +285,7 @@ std::vector<Vector> GLViewPachinko::presetTwo(WOPManager* wm){
 	list.push_back(Vector(0, 35, 45));
 
 	wm->setBallBounds(0, 35, 55);
+	wm->setSize(8);
 
 	setBoardState(Vector(1.9, 1, 1.3));
 
@@ -474,8 +472,10 @@ std::vector<Vector> GLViewPachinko::presetThree(WOPManager* wm){
 	list.push_back(Vector(0, 55, 65));
 
 	wm->setBallBounds(0, 55, 75);
+	wm->setSize(12);
 
 	setBoardState(Vector(2.3, 1, 1.7));
+	
 
 	return list;
 
@@ -597,6 +597,9 @@ void GLViewPachinko::setBoardState(Vector scale) {
 	wo = wm->createPlane({0, wm->getMax() + 5, 0});
 
 	worldLst->push_back(wo);
+
+	// create pots in the bottom of the board
+
 }
 
 
