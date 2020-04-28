@@ -12,6 +12,7 @@ class WOPManager
 {
 public:
 	WOPManager();
+	~WOPManager();
 	void updatePhysics();
 	/*This sets the WOPManager's initial Peg placement's Rotation*/
 	void setPegRot(PxQuat in);

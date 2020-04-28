@@ -26,6 +26,15 @@ WOPManager::WOPManager()
 	srand(time(NULL)); //seed rand
 }
 
+WOPManager::~WOPManager()
+{
+	((PachinkoWOP*)ball)->getActor()->release();
+	f->release();
+	p->release();
+	gPvd->release();
+	d->release();
+}
+
 void WOPManager::updatePhysics()
 {
 	scene->simulate(0.075);
