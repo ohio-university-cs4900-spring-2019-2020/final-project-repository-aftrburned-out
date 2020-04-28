@@ -24,11 +24,15 @@ WOPManager::WOPManager()
 	BoardRot = { 0,0,0,1 };
 
 	srand(time(NULL)); //seed rand
+	ball = nullptr;
 }
 
 WOPManager::~WOPManager()
 {
-	((PachinkoWOP*)ball)->getActor()->release();
+	if (ball != nullptr)
+	{
+		((PachinkoWOP*)ball)->getActor()->release();
+	}
 	f->release();
 	p->release();
 	gPvd->release();

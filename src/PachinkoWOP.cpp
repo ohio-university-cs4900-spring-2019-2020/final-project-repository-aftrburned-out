@@ -137,7 +137,7 @@ void PachinkoWOP::updatePoseFromPhysicsEngine(physx::PxActor* actor)
 
 PxActor* PachinkoWOP::getActor()
 {
-	return this->a;
+	return a;
 }
 
 PachinkoWOP::~PachinkoWOP()
