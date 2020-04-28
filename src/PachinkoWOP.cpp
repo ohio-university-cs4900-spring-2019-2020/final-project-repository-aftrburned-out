@@ -135,6 +135,14 @@ void PachinkoWOP::updatePoseFromPhysicsEngine(physx::PxActor* actor)
 	}
 }
 
+PachinkoWOP::~PachinkoWOP()
+{
+	this->p = nullptr;
+	this->s = nullptr;
+	this->a = nullptr;
+	this->shape = nullptr;
+}
+
 void PachinkoWOP::setPosition(Aftr::Vector v)
 {
 	WO* wo = this->getWO();

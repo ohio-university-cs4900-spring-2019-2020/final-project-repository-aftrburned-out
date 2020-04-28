@@ -20,6 +20,7 @@ public:
 	void setRotation(const float* info);
 	void updatePoseFromPhysicsEngine(physx::PxActor* actor);
 	PxObj t;
+	~PachinkoWOP();
 protected:
 	PachinkoWOP(physx::PxPhysics* p, physx::PxScene* s);
 	void onCreate(const std::string& path, const Aftr::Vector& scale, Aftr::MESH_SHADING_TYPE mst, PxObj ty, physx::PxVec3& pos, physx::PxQuat& rot);
