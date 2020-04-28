@@ -100,6 +100,8 @@ TARGET_INCLUDE_DIRECTORIES( ${PROJECT_NAME} PRIVATE
                            #"${AFTR_USR_INCLUDE_DIR}"
                            #"${CMAKE_SOURCE_DIR}/../my3rdPartyLib/include/"
 			"../include/PhysX/"
+			"../include/irrKlang/"
+			"../include/irrKlang/decoder/"
                           )
 
 
