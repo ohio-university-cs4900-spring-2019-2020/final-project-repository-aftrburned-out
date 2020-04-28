@@ -153,7 +153,7 @@ void GLViewPachinko::onCreate()
 
    //this->setNumPhysicsStepsPerRender( 0 ); //pause physics engine on start up; will remain paused till set to 1
 
-
+   //sound
    this->snd = SoundMngr::init();
    this->snd->play2D("/include/music/dreamscape.mp3", true, false, true);
    this->snd->getSound2D().at(0)->setVolume(0.5f);
