@@ -76,7 +76,7 @@ void GLViewPachinko::createGUI() {
 
 	WOGUILabel* easyBoard = WOGUILabel::New(nullptr);
 	easyBoard->setText(" 1 - Easy Board");
-	easyBoard->setColor(0, 0, 0, 255);
+	easyBoard->setColor(255, 255, 255, 255);
 	easyBoard->setFontSize(15); //font size is correlated with world size
 	easyBoard->setPosition(Vector(0, 1, 0));
 	easyBoard->setFontOrientation(FONT_ORIENTATION::foLEFT_TOP);
@@ -85,7 +85,7 @@ void GLViewPachinko::createGUI() {
 
 	WOGUILabel* medBoard = WOGUILabel::New(nullptr);
 	medBoard->setText(" 2- Medium Board");
-	medBoard->setColor(0, 0, 0, 255);
+	medBoard->setColor(255, 255, 255, 255);
 	medBoard->setFontSize(15); //font size is correlated with world size
 	medBoard->setPosition(Vector(0, 0.95, 0));
 	medBoard->setFontOrientation(FONT_ORIENTATION::foLEFT);
@@ -94,7 +94,7 @@ void GLViewPachinko::createGUI() {
 
 	WOGUILabel* lrgBoard = WOGUILabel::New(nullptr);
 	lrgBoard->setText(" 3- Large Board");
-	lrgBoard->setColor(0, 0, 0, 255);
+	lrgBoard->setColor(255, 255, 255, 255);
 	lrgBoard->setFontSize(15); //font size is correlated with world size
 	lrgBoard->setPosition(Vector(0, 0.92, 0));
 	lrgBoard->setFontOrientation(FONT_ORIENTATION::foLEFT);
@@ -103,7 +103,7 @@ void GLViewPachinko::createGUI() {
 
 	WOGUILabel* spwnBall = WOGUILabel::New(nullptr);
 	spwnBall->setText(" Space- Spawn Ball");
-	spwnBall->setColor(0, 0, 0, 255);
+	spwnBall->setColor(255, 255, 255, 255);
 	spwnBall->setFontSize(15); //font size is correlated with world size
 	spwnBall->setPosition(Vector(0, 0.89, 0));
 	spwnBall->setFontOrientation(FONT_ORIENTATION::foLEFT);
@@ -112,7 +112,7 @@ void GLViewPachinko::createGUI() {
 
 	WOGUILabel* delBall = WOGUILabel::New(nullptr);
 	delBall->setText(" e- Erase Ball");
-	delBall->setColor(0, 0, 0, 255);
+	delBall->setColor(255, 255, 255, 255);
 	delBall->setFontSize(15); //font size is correlated with world size
 	delBall->setPosition(Vector(0, 0.85, 0));
 	delBall->setFontOrientation(FONT_ORIENTATION::foLEFT);
@@ -121,7 +121,7 @@ void GLViewPachinko::createGUI() {
 
 	WOGUILabel* resHub = WOGUILabel::New(nullptr);
 	resHub->setText(" r- Reset Hub");
-	resHub->setColor(0, 0, 0, 255);
+	resHub->setColor(255, 255, 255, 255);
 	resHub->setFontSize(15); //font size is correlated with world size
 	resHub->setPosition(Vector(0, 0.81, 0));
 	resHub->setFontOrientation(FONT_ORIENTATION::foLEFT);
@@ -130,9 +130,13 @@ void GLViewPachinko::createGUI() {
 
 	scoreLabel = WOGUILabel::New(nullptr);
 	scoreLabel->setText("Score: " + std::to_string(score));
-	scoreLabel->setColor(0, 0, 0, 255);
+	scoreLabel->setColor(255, 255, 255, 255);
 	scoreLabel->setFontSize(25); //font size is correlated with world size
+<<<<<<< HEAD
 	scoreLabel->setPosition(Vector(0, -1, 0));
+=======
+	scoreLabel->setPosition(Vector(0.99, 0.98, 0));
+>>>>>>> 6feac679f69a8f28c22e6efce4791c7f05d817c3
 	scoreLabel->setFontOrientation(FONT_ORIENTATION::foRIGHT_TOP);
 	scoreLabel->setFontPath(trebuc);
 	worldLst->push_back(scoreLabel);
