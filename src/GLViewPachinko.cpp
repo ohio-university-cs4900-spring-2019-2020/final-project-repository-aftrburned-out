@@ -510,6 +510,7 @@ void GLViewPachinko::createBucketFonts(std::vector<int> bucketVals) {
 		scoreLabel->getModelT<MGLFTGLString>()->setFontColor(aftrColor4f(255.0f, 255.0f, 255.0f, 0.0f));
 		scoreLabel->getModelT<MGLFTGLString>()->setSize(10, 5);
 		scoreLabel->setPosition(0, start, 5);
+		scoreLabel->getModelT<MGLFTGLString>()->setText(std::to_string(bucketVals[i]));
 		worldLst->push_back(scoreLabel);
 
 		start += 5;
