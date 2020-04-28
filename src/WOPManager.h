@@ -43,6 +43,8 @@ public:
 	/*This creates a Pachinko Peg at the given postion.
 	Remember to use setPegRot() before using this to give it a rotation.*/
 	WO* createPachinkoPeg(Vector pos);
+	/*This creates a Pachinko Bucket Wall at the given postion.*/
+	WO* createBucket(Vector pos);
 	/*This sets the min and max y values and height that the Pachinko ball can spawn*/
 	void setBallBounds(float min, float max, float height);
 	/*Sets the size of the board*/
