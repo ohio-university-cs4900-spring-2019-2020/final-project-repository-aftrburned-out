@@ -1,15 +1,6 @@
-# AftrBurned Out Pachinko - Physics
+# AftrBurned Out Pachinko - Buckets
 
 ## ToDo
-* Fix bugs when found
-
-## Finished
-* Physics Implemented
-* Pachinko Balls
-    * Proper rotation
-* Static Peg Objects
-    * Pachinko Balls interacting with pegs
-* Improve WOPhys Manager class
-    * Add Board creation
-        * large flat plane with specified rotation
-    * Ability to move & rotate WOPhys objects
+* Get scores working
+* Buckets implemented
+   * Scores with updating GUI
