@@ -142,11 +142,11 @@ PxActor* PachinkoWOP::getActor()
 
 PachinkoWOP::~PachinkoWOP()
 {
-	if (a->isReleasable())
-	{
-		a->release();
-	}
-	s->removeActor(*a);
+	//if (a != nullptr && a->isReleasable())
+	//{
+	//	a->release();
+	//}
+	//s->removeActor(*a);
 	this->p = nullptr;
 	this->s = nullptr;
 	this->a = nullptr;

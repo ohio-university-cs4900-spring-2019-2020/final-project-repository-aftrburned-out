@@ -744,10 +744,11 @@ void Aftr::GLViewPachinko::loadMap()
    ManagerOpenGLState::GL_CLIPPING_PLANE = 1000.0;
    ManagerOpenGLState::GL_NEAR_PLANE = 0.1f;
    ManagerOpenGLState::enableFrustumCulling = false;
-   Axes::isVisible = true;
+   Axes::isVisible = false;
    this->glRenderer->isUsingShadowMapping( false ); //set to TRUE to enable shadow mapping, must be using GL 3.2+
-
-   this->cam->setPosition( 15,15,10 );
+   this->cam->setCameraProjectionType(Camera::PROJ_MATRIX_PROJ_TYPE::pmptORTHOGRAPHIC);
+   this->cam->rotateAboutGlobalZ(180 * Aftr::DEGtoRAD);
+   this->cam->updateProjectionMatrix();
 
    std::string shinyRedPlasticCube( ManagerEnvironmentConfiguration::getSMM() + "/models/cube4x4x4redShinyPlastic_pp.wrl" );
    std::string wheeledCar( ManagerEnvironmentConfiguration::getSMM() + "/models/rcx_treads.wrl" );
@@ -815,6 +816,9 @@ void GLViewPachinko::setBoardState(Vector scale) {
 	//this is the background board
 	wm->setBoardRot({ 0, 0.7071068, 0, 0.7071068 });
 	WO* wo = wm->createBoard(Vector(-3.5, wm->getMax()/2.0, (wm->getHeight() - 10)/2.0), board, scale);
+
+	this->cam->setPosition(60, wm->getMax() / 2.0, (wm->getHeight() - 10) / 2.0);
+
 
 	worldLst->push_back(wo);
 
