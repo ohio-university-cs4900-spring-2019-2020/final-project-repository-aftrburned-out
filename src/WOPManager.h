@@ -26,7 +26,7 @@ public:
 	WO* createFloor(std::string path);
 	/*This creates a Board at the given postion.
 	Remember to use setBoardRot() before using this to give it a rotation.*/
-	WO* createBoard(Vector pos, std::string path);
+	WO* createBoard(Vector pos, std::string path, Vector scale);
 	/*Getter for Min*/
 	float getMin();
 	/*Getter for Max*/

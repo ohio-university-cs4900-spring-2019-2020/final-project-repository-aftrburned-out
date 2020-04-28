@@ -105,7 +105,7 @@ WO* WOPManager::createPachinkoBall(Vector pos)
 	rx = pos.x;
 	ry = pos.y;
 	rz = pos.z;
-	PachinkoWOP* wo = PachinkoWOP::New(p, scene, (ManagerEnvironmentConfiguration::getLMM() + "../models/ball.obj"), { 1, 1, 1 }, Aftr::MESH_SHADING_TYPE::mstAUTO, PachinkoWOP::PxObj::Ball, physx::PxVec3{ rx, ry, rz }, PegRot);
+	PachinkoWOP* wo = PachinkoWOP::New(p, scene, (ManagerEnvironmentConfiguration::getLMM() + "/models/ball.obj"), { 1, 1, 1 }, Aftr::MESH_SHADING_TYPE::mstAUTO, PachinkoWOP::PxObj::Ball, physx::PxVec3{ rx, ry, rz }, PegRot);
 
 	wo->setPosition({ rx, ry, 25 });
 	return wo;
@@ -127,13 +127,15 @@ void WOPManager::setBallBounds(float min, float max, float height)
 
 // Creates the board at the given positon with the given model.
 // Remember to use setPlaneRot() before using this to give it a rotation.
-WO* WOPManager::createBoard(Vector pos, std::string path)
+WO* WOPManager::createBoard(Vector pos, std::string path, Vector scale)
 {
 	float rx, ry, rz = 0;
 	rx = pos.x;
 	ry = pos.y;
 	rz = pos.z;
-	return PachinkoWOP::New(p, scene, path, Vector(1, 1, 1), MESH_SHADING_TYPE::mstFLAT, PachinkoWOP::PxObj::Plane, physx::PxVec3{ rx, ry, rz }, BoardRot);
+	WO* wo = PachinkoWOP::New(p, scene, path, scale, MESH_SHADING_TYPE::mstFLAT, PachinkoWOP::PxObj::Plane, physx::PxVec3{ rx, ry, rz }, BoardRot);
+	wo->rotateAboutGlobalZ(90 * Aftr::DEGtoRAD);
+	return wo;
 }
 
 float WOPManager::getMin() { return min; }
