@@ -667,7 +667,7 @@ std::vector<Vector> GLViewPachinko::presetThree(){
 
 	setBoardState(Vector(2.3, 1, 1.7));
 
-	std::vector vals = { -10, 0, 10, 20, 30, 45, 60, 45, 30, 20, 10, 0, -10 };
+	std::vector vals = { -20, 0, 10, 20, 10, -10, 60, -10, 10, 20, 10, 0, -20 };
 
 	wm->setBucketVals(vals);
 	createBucketFonts(vals);
