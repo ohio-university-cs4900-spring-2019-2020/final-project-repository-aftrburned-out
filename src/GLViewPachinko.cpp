@@ -529,14 +529,13 @@ void Aftr::GLViewPachinko::loadMap()
   
 
    ////Create the infinite grass plane that uses NVIDIAPhysX(the floor)
-   wm->setPlaneRot({ 0, 0, 0, 1 });
-   wo = wm->createPlane({ 0, 0, 0 });
+   //wm->setPlaneRot({ 0, 0, 0, 1 });
+   //wo = wm->createPlane({ 0, 0, 0 });
    //PachinkoWOP::New(p, scene, grass, Vector(1,1,1), MESH_SHADING_TYPE::mstFLAT, PachinkoWOP::PxObj::Floor, physx::PxVec3{ 0, 0, 0 });
-   wo->setPosition( Vector(0,0,0) );
-   wo->renderOrderType = RENDER_ORDER_TYPE::roOPAQUE;
-   wo->getModel()->getModelDataShared()->getModelMeshes().at(0)->getSkins().at(0).getMultiTextureSet().at(0)->setTextureRepeats( 5.0f );
-   wo->setLabel( "Grass" );
-   worldLst->push_back( wo );
+   //wo->renderOrderType = RENDER_ORDER_TYPE::roOPAQUE;
+   //wo->getModel()->getModelDataShared()->getModelMeshes().at(0)->getSkins().at(0).getMultiTextureSet().at(0)->setTextureRepeats( 5.0f );
+   //wo->setLabel( "Grass" );
+   //worldLst->push_back( wo );
    //createPachinkoWayPoints();
 
    //
@@ -550,7 +549,7 @@ void Aftr::GLViewPachinko::loadMap()
    //
 
 
-   std::vector<Vector> list = presetThree(wm);
+   std::vector<Vector> list = presetTwo(wm);
 
    // to get the rotation angles, use this website:
    // https://www.andre-gaschler.com/rotationconverter/
@@ -599,7 +598,15 @@ void GLViewPachinko::setBoardState(Vector scale) {
 	worldLst->push_back(wo);
 
 	// create pots in the bottom of the board
+	for (int i = 0; i < wm->getSize(); i++)
+	{
+		int v = i * 5;
+		wo = wm->createBucket(Vector(0, v, 0));
+		worldLst->push_back(wo);
+	}
 
+	wo = wm->createFloor((ManagerEnvironmentConfiguration::getLMM() + "/models/divider.obj"));
+	worldLst->push_back(wo);
 }
 
 
