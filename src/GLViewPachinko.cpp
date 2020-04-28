@@ -46,6 +46,8 @@ GLViewPachinko* GLViewPachinko::New( const std::vector< std::string >& args )
    GLViewPachinko* glv = new GLViewPachinko( args );
    glv->init( Aftr::GRAVITY, Vector( 0, 0, -1.0f ), "aftr.conf", PHYSICS_ENGINE_TYPE::petODE );
    glv->onCreate();
+   glv->started = false;
+
    return glv;
 }
 
@@ -72,7 +74,6 @@ void GLViewPachinko::onCreate()
 {
    //GLViewPachinko::onCreate() is invoked after this module's LoadMap() is completed.
    //At this point, all the managers are initialized. That is, the engine is fully initialized.
-
    if( this->pe != NULL )
    {
       //optionally, change gravity direction and magnitude here
@@ -81,6 +82,7 @@ void GLViewPachinko::onCreate()
       this->pe->setGravityScalar( Aftr::GRAVITY );
    }
    this->setActorChaseType( STANDARDEZNAV ); //Default is STANDARDEZNAV mode
+
    //this->setNumPhysicsStepsPerRender( 0 ); //pause physics engine on start up; will remain paused till set to 1
 }
 
@@ -95,7 +97,10 @@ void GLViewPachinko::updateWorld()
                           //If you want to add additional functionality, do it after
                           //this call.
 
-   wm->updatePhysics();
+   if (wm)
+   {
+	   wm->updatePhysics();
+   }
 
 }
 
@@ -123,6 +128,11 @@ void GLViewPachinko::onMouseMove( const SDL_MouseMotionEvent& e )
    GLView::onMouseMove( e );
 }
 
+void GLViewPachinko::kill()
+{
+	worldLst->clear();
+	wm->changeScene();	//delete the physx objects
+}
 
 void GLViewPachinko::onKeyDown( const SDL_KeyboardEvent& key )
 {
@@ -130,9 +140,59 @@ void GLViewPachinko::onKeyDown( const SDL_KeyboardEvent& key )
    if( key.keysym.sym == SDLK_0 )
       this->setNumPhysicsStepsPerRender( 1 );
 
-   if( key.keysym.sym == SDLK_1 )
+   if(!started && key.keysym.sym == SDLK_1 )
    {	
-	   worldLst->push_back(wm->__createPachinkoBall());
+	   kill();
+
+	   WO* wo = WOSkyBox::New((ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_lemon_lime+6.jpg"), this->getCameraPtrPtr());
+	   wo->setPosition(Vector(0, 0, 0));
+	   wo->setLabel("Sky Box");
+	   wo->renderOrderType = RENDER_ORDER_TYPE::roOPAQUE;
+	   worldLst->push_back(wo);
+
+	   createField(SMALL);
+   }
+   if (!started && key.keysym.sym == SDLK_2)
+   {
+	   kill();
+
+	   WO* wo = WOSkyBox::New((ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_water+6.jpg"), this->getCameraPtrPtr());
+	   wo->setPosition(Vector(0, 0, 0));
+	   wo->setLabel("Sky Box");
+	   wo->renderOrderType = RENDER_ORDER_TYPE::roOPAQUE;
+	   worldLst->push_back(wo);
+
+	   createField(MEDIUM);
+   }
+   if (!started && key.keysym.sym == SDLK_3)
+   {
+
+	   kill();
+
+	   WO* wo = WOSkyBox::New((ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_dust+6.jpg"), this->getCameraPtrPtr());
+	   wo->setPosition(Vector(0, 0, 0));
+	   wo->setLabel("Sky Box");
+	   wo->renderOrderType = RENDER_ORDER_TYPE::roOPAQUE;
+	   worldLst->push_back(wo);
+
+	   createField(LARGE);
+   }
+   if (started && key.keysym.sym == SDLK_SPACE)
+   {
+		worldLst->push_back(wm->__createPachinkoBall());
+   }
+   if (key.keysym.sym == SDLK_r)
+   {
+	   //this->resetEngine(); // this doesn't work with physx
+	   worldLst->clear();
+	   
+	   WO* wo = WOSkyBox::New((ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_Hubble_Nebula+6.jpg"), this->getCameraPtrPtr());
+	   wo->setPosition(Vector(0, 0, 0));
+	   wo->setLabel("Sky Box");
+	   wo->renderOrderType = RENDER_ORDER_TYPE::roOPAQUE;
+	   worldLst->push_back(wo);
+
+	   started = false;
    }
 }
 
@@ -489,13 +549,47 @@ std::vector<Vector> GLViewPachinko::presetThree(){
 
 	setBoardState(Vector(2.3, 1, 1.7));
 
-	std::vector vals = { -10, 0, 10, 20, 30, 50, 30, 20, 10, 0, -10 };
+	std::vector vals = { -10, 0, 10, 20, 30, 45, 60, 45, 30, 20, 10, 0, -10 };
 
 	wm->setBucketVals(vals);
 	createBucketFonts(vals);
 
 	return list;
 
+}
+
+void GLViewPachinko::createField(int preset)
+{
+	started = true;
+	std::vector<Vector> list;
+	switch (preset)
+	{
+	case 1:
+	{
+		list = presetOne();
+		break;
+	}
+	case 2:
+	{
+		list = presetTwo();
+		break;
+	}
+	case 3:
+	{
+		list = presetThree();
+		break;
+	}
+	}
+
+	// to get the rotation angles, use this website:
+	// https://www.andre-gaschler.com/rotationconverter/
+	// and use the "Euler angles of multiple axis rotations" input
+	wm->setPegRot({ 0.0864101, -0.1300295, -0.0113761, 0.9876721 });
+
+	for (int i = 0; i < list.size(); i++)
+	{
+		worldLst->push_back(wm->createPachinkoPeg(list[i]));
+	}
 }
 
 void GLViewPachinko::createBucketFonts(std::vector<int> bucketVals) {
@@ -507,9 +601,11 @@ void GLViewPachinko::createBucketFonts(std::vector<int> bucketVals) {
 	for (int i = 0; i < size; i++) {
 		WOFTGLString* scoreLabel = WOFTGLString::New(ManagerEnvironmentConfiguration::getSMM() + "/fonts/TREBUC.ttf", 30);
 		
-		scoreLabel->getModelT<MGLFTGLString>()->setFontColor(aftrColor4f(255.0f, 255.0f, 255.0f, 0.0f));
-		scoreLabel->getModelT<MGLFTGLString>()->setSize(10, 5);
+		scoreLabel->getModelT<MGLFTGLString>()->setFontColor(aftrColor4f(255.0f, 255.0f, 255.0f, 255.0f));
+		scoreLabel->getModelT<MGLFTGLString>()->setSize(2, 1);
 		scoreLabel->setPosition(0, start, 5);
+		scoreLabel->rotateAboutGlobalZ(90 * Aftr::DEGtoRAD);
+		scoreLabel->rotateAboutGlobalY(90 * Aftr::DEGtoRAD);
 		scoreLabel->getModelT<MGLFTGLString>()->setText(std::to_string(bucketVals[i]));
 		worldLst->push_back(scoreLabel);
 
@@ -520,9 +616,9 @@ void GLViewPachinko::createBucketFonts(std::vector<int> bucketVals) {
 
 void Aftr::GLViewPachinko::loadMap()
 {
-	// create the WOP Manager
-	wm = new WOPManager();
-	
+   // create the Physics Manager
+   wm = new WOPManager();
+
    this->worldLst = new WorldList(); //WorldList is a 'smart' vector that is used to store WO*'s
    this->actorLst = new WorldList();
    this->netLst = new WorldList();
@@ -584,19 +680,6 @@ void Aftr::GLViewPachinko::loadMap()
    // wo = wm->createPlane({ 0, -5, 0 });
    // worldLst->push_back(wo);
    //
-
-
-   std::vector<Vector> list = presetThree();
-
-   // to get the rotation angles, use this website:
-   // https://www.andre-gaschler.com/rotationconverter/
-   // and use the "Euler angles of multiple axis rotations" input
-   wm->setPegRot({ 0.0864101, -0.1300295, -0.0113761, 0.9876721 });
-
-   for (int i = 0; i < list.size(); i++)
-   {
-	   worldLst->push_back(wm->createPachinkoPeg(list[i]));
-   }
 
    //worldLst->push_back(wm->createBoard({ 50, 50, 50 }, grass));//(ManagerEnvironmentConfiguration::getSMM() + "images/DefaultTexture.jpg")));
 

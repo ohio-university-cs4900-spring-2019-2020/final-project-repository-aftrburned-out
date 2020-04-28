@@ -37,13 +37,16 @@ public:
    virtual std::vector<Vector> presetOne();
    virtual std::vector<Vector> presetTwo();
    virtual std::vector<Vector> presetThree();
-
+   virtual void createField(int preset);
    virtual void createBucketFonts(std::vector<int>);
+   virtual void kill();
+   enum presets{SMALL = 1, MEDIUM = 2, LARGE = 3};
+
 
 protected:
    GLViewPachinko( const std::vector< std::string >& args );
    virtual void onCreate();
-
+   bool started;
 private:
 	WOPManager* wm;
 	int score;
