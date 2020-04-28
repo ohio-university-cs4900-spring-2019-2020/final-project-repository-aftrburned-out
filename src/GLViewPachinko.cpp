@@ -155,8 +155,9 @@ void GLViewPachinko::onCreate()
 
    //sound
    this->snd = SoundMngr::init();
-   this->snd->play2D("/include/music/dreamscape.mp3", true, false, true);
-   this->snd->getSound2D().at(0)->setVolume(0.5f);
+   std::string sound(ManagerEnvironmentConfiguration::getLMM() + "/music/dreamscape.mp3");
+   this->snd->play2D(sound.c_str(), true, false, true);
+   this->snd->getSound2D().at(0)->setVolume(0.1f);
 
    createGUI();
 }
