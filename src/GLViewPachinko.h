@@ -5,6 +5,7 @@
 #include "WOFTGLString.h"
 #include "MGLFTGLString.h"
 #include "WOGUILabel.h"
+#include "soundMngr.h"
 
 namespace Aftr
 {
@@ -57,6 +58,7 @@ private:
 	WOPManager* wm;
 	int score;
 	WOGUILabel* scoreLabel;
+    SoundMngr* snd;
 };
 
 /** \} */
