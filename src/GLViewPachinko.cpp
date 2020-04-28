@@ -566,14 +566,14 @@ void Aftr::GLViewPachinko::loadMap()
 /*
 	This will set all board surrounding pieces that will hold the balls in. Front, back, and both sides
 */
-void GLViewPachinko::setBoardState() {
+void GLViewPachinko::setBoardState(Vector scale) {
 
 	//style for the background board
 	std::string board(ManagerEnvironmentConfiguration::getLMM() + "/models/finally.obj");
 
 	//this is the background board
 	wm->setBoardRot({ 0, 0.7071068, 0, 0.7071068 });
-	WO* wo = wm->createBoard(Vector(-3.5, 0, 0), board, Vector(2, 1, 2));
+	WO* wo = wm->createBoard(Vector(-3.5, wm->getMax()/2.0, (wm->getHeight() - 10)/2.0), board, scale);
 
 	worldLst->push_back(wo);
 

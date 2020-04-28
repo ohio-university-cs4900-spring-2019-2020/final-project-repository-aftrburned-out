@@ -33,11 +33,15 @@ public:
    virtual void onMouseMove( const SDL_MouseMotionEvent& e );
    virtual void onKeyDown( const SDL_KeyboardEvent& key );
    virtual void onKeyUp( const SDL_KeyboardEvent& key );
-   virtual void setBoardState();
+   virtual void setBoardState(Vector scale);
+   virtual std::vector<Vector> presetOne(WOPManager* wm);
+   virtual std::vector<Vector> presetTwo(WOPManager* wm);
+   virtual std::vector<Vector> presetThree(WOPManager* wm);
 
 protected:
    GLViewPachinko( const std::vector< std::string >& args );
    virtual void onCreate();
+
 private:
 	WOPManager* wm;
 };
