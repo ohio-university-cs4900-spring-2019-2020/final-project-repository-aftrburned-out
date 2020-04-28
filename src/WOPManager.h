@@ -57,6 +57,10 @@ public:
 	std::vector<int> getBucketVals();
 	/*Changes the PhysX Scene*/
 	void changeScene();
+	/*Sets the current ball*/
+	void setBall(WO* wo);
+	/*Gets the current ball*/
+	WO* getBall();
 protected:
 	PxDefaultAllocator a;
 	PxDefaultErrorCallback e;
@@ -74,5 +78,6 @@ protected:
 	float height;
 	int size;
 	std::vector<int> bucketVals;
+	WO* ball;
 	//PxCooking* cook;
 };
