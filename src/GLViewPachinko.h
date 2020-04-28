@@ -42,6 +42,7 @@ public:
    virtual void kill();
    virtual void eraseBall();
    virtual void updateScore(int toAdd);
+   virtual void createGUI();
    enum presets{SMALL = 1, MEDIUM = 2, LARGE = 3};
 
 
@@ -50,6 +51,7 @@ protected:
    virtual void onCreate();
    bool started;
    bool ballOut;
+   WOGUILabel* scoreLabel;
 private:
 	WOPManager* wm;
 	int score;

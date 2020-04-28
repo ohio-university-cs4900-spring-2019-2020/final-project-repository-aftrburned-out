@@ -70,6 +70,73 @@ GLViewPachinko::GLViewPachinko( const std::vector< std::string >& args ) : GLVie
 
    //GLViewPachinko::onCreate() is invoked after this module's LoadMap() is completed.
 }
+void GLViewPachinko::createGUI() {
+
+	std::string trebuc(ManagerEnvironmentConfiguration::getSMM() + "/fonts/TREBUC.ttf");
+
+	WOGUILabel* easyBoard = WOGUILabel::New(nullptr);
+	easyBoard->setText(" 1 - Easy Board");
+	easyBoard->setColor(0, 0, 0, 255);
+	easyBoard->setFontSize(15); //font size is correlated with world size
+	easyBoard->setPosition(Vector(0, 1, 0));
+	easyBoard->setFontOrientation(FONT_ORIENTATION::foLEFT_TOP);
+	easyBoard->setFontPath(trebuc);
+	worldLst->push_back(easyBoard);
+
+	WOGUILabel* medBoard = WOGUILabel::New(nullptr);
+	medBoard->setText(" 2- Medium Board");
+	medBoard->setColor(0, 0, 0, 255);
+	medBoard->setFontSize(15); //font size is correlated with world size
+	medBoard->setPosition(Vector(0, 0.95, 0));
+	medBoard->setFontOrientation(FONT_ORIENTATION::foLEFT);
+	medBoard->setFontPath(trebuc);
+	worldLst->push_back(medBoard);
+
+	WOGUILabel* lrgBoard = WOGUILabel::New(nullptr);
+	lrgBoard->setText(" 3- Large Board");
+	lrgBoard->setColor(0, 0, 0, 255);
+	lrgBoard->setFontSize(15); //font size is correlated with world size
+	lrgBoard->setPosition(Vector(0, 0.92, 0));
+	lrgBoard->setFontOrientation(FONT_ORIENTATION::foLEFT);
+	lrgBoard->setFontPath(trebuc);
+	worldLst->push_back(lrgBoard);
+
+	WOGUILabel* spwnBall = WOGUILabel::New(nullptr);
+	spwnBall->setText(" Space- Spawn Ball");
+	spwnBall->setColor(0, 0, 0, 255);
+	spwnBall->setFontSize(15); //font size is correlated with world size
+	spwnBall->setPosition(Vector(0, 0.89, 0));
+	spwnBall->setFontOrientation(FONT_ORIENTATION::foLEFT);
+	spwnBall->setFontPath(trebuc);
+	worldLst->push_back(spwnBall);
+
+	WOGUILabel* delBall = WOGUILabel::New(nullptr);
+	delBall->setText(" e- Erase Ball");
+	delBall->setColor(0, 0, 0, 255);
+	delBall->setFontSize(15); //font size is correlated with world size
+	delBall->setPosition(Vector(0, 0.85, 0));
+	delBall->setFontOrientation(FONT_ORIENTATION::foLEFT);
+	delBall->setFontPath(trebuc);
+	worldLst->push_back(delBall);
+
+	WOGUILabel* resHub = WOGUILabel::New(nullptr);
+	resHub->setText(" r- Reset Hub");
+	resHub->setColor(0, 0, 0, 255);
+	resHub->setFontSize(15); //font size is correlated with world size
+	resHub->setPosition(Vector(0, 0.81, 0));
+	resHub->setFontOrientation(FONT_ORIENTATION::foLEFT);
+	resHub->setFontPath(trebuc);
+	worldLst->push_back(resHub);
+
+	scoreLabel = WOGUILabel::New(nullptr);
+	scoreLabel->setText("Score: " + std::to_string(score));
+	scoreLabel->setColor(0, 0, 0, 255);
+	scoreLabel->setFontSize(25); //font size is correlated with world size
+	scoreLabel->setPosition(Vector(0, 1, 0));
+	scoreLabel->setFontOrientation(FONT_ORIENTATION::foRIGHT_TOP);
+	scoreLabel->setFontPath(trebuc);
+	worldLst->push_back(scoreLabel);
+}
 
 
 void GLViewPachinko::onCreate()
@@ -86,6 +153,7 @@ void GLViewPachinko::onCreate()
    this->setActorChaseType( STANDARDEZNAV ); //Default is STANDARDEZNAV mode
 
    //this->setNumPhysicsStepsPerRender( 0 ); //pause physics engine on start up; will remain paused till set to 1
+   createGUI();
 }
 
 GLViewPachinko::~GLViewPachinko()
@@ -117,7 +185,7 @@ void GLViewPachinko::updateWorld()
 
 		   updateScore(toAdd);
 
-		   std::cout << "ypos: " << ypos << "score: " << score << std::endl;
+		   
 
 		   eraseBall();
 	   }
@@ -167,7 +235,7 @@ void Aftr::GLViewPachinko::eraseBall()
 void GLViewPachinko::updateScore(int toAdd)
 {
 	score += toAdd;
-	// add gui update code here
+	scoreLabel->setText("Score: " + std::to_string(score));
 }
 
 void GLViewPachinko::onKeyDown( const SDL_KeyboardEvent& key )
