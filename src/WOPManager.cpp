@@ -164,3 +164,13 @@ float WOPManager::getHeight() { return height; }
 void WOPManager::setSize(int s) { size = s; }
 
 int WOPManager::getSize() { return size; }
+
+void WOPManager::setBucketVals(std::vector<int> vals)
+{
+	bucketVals = vals;
+}
+
+std::vector<int> WOPManager::getBucketVals()
+{
+	return bucketVals;
+}

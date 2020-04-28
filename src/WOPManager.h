@@ -51,6 +51,10 @@ public:
 	void setSize(int s);
 	/*Gets the size of the board*/
 	int getSize();
+	/*Sets the Bucket Values*/
+	void setBucketVals(std::vector<int> vals);
+	/*Gets the Bucket Values*/
+	std::vector<int> getBucketVals();
 protected:
 	PxDefaultAllocator a;
 	PxDefaultErrorCallback e;
@@ -67,5 +71,6 @@ protected:
 	float min;
 	float height;
 	int size;
+	std::vector<int> bucketVals;
 	//PxCooking* cook;
 };
