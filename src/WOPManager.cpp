@@ -190,6 +190,8 @@ std::vector<int> WOPManager::getBucketVals()
 
 void WOPManager::changeScene()
 {
+	ball = nullptr;
+	
 	scene->release(); // remove all objects from scene first
 
 	PxSceneDesc s(p->getTolerancesScale());
