@@ -558,6 +558,8 @@ void Aftr::GLViewPachinko::loadMap()
 
    //worldLst->push_back(wm->createBoard({ 50, 50, 50 }, grass));//(ManagerEnvironmentConfiguration::getSMM() + "images/DefaultTexture.jpg")));
 
+   setBoardState();
+
 }
 
 
@@ -567,11 +569,11 @@ void Aftr::GLViewPachinko::loadMap()
 void GLViewPachinko::setBoardState() {
 
 	//style for the background board
-	std::string board(ManagerEnvironmentConfiguration::getLMM() + "../models/finally.obj");
+	std::string board(ManagerEnvironmentConfiguration::getLMM() + "/models/finally.obj");
 
 	//this is the background board
 	wm->setBoardRot({ 0, 0.7071068, 0, 0.7071068 });
-	WO* wo = wm->createBoard(Vector(-3.5, 0, 0), board);
+	WO* wo = wm->createBoard(Vector(-3.5, 0, 0), board, Vector(2, 1, 2));
 
 	worldLst->push_back(wo);
 
