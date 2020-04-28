@@ -44,6 +44,7 @@ protected:
 
 private:
 	WOPManager* wm;
+	int score;
 };
 
 /** \} */
