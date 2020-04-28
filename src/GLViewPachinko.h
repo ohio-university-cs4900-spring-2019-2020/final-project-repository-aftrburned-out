@@ -34,9 +34,11 @@ public:
    virtual void onKeyDown( const SDL_KeyboardEvent& key );
    virtual void onKeyUp( const SDL_KeyboardEvent& key );
    virtual void setBoardState(Vector scale);
-   virtual std::vector<Vector> presetOne(WOPManager* wm);
-   virtual std::vector<Vector> presetTwo(WOPManager* wm);
-   virtual std::vector<Vector> presetThree(WOPManager* wm);
+   virtual std::vector<Vector> presetOne();
+   virtual std::vector<Vector> presetTwo();
+   virtual std::vector<Vector> presetThree();
+
+   virtual void createBucketFonts(std::vector<int>);
 
 protected:
    GLViewPachinko( const std::vector< std::string >& args );

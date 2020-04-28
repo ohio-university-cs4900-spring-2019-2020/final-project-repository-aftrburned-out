@@ -35,6 +35,9 @@
 //If we want to use way points, we need to include this.
 #include "PachinkoWayPoints.h"
 #include "PachinkoWOP.h"
+#include "WOFTGLString.h"
+#include "MGLFTGLString.h"
+#include "WOGUILabel.h"
 
 using namespace Aftr;
 
@@ -138,7 +141,7 @@ void GLViewPachinko::onKeyUp( const SDL_KeyboardEvent& key )
    GLView::onKeyUp( key );
 }
 
-std::vector<Vector> GLViewPachinko::presetOne(WOPManager* wm){
+std::vector<Vector> GLViewPachinko::presetOne(){
 	std::vector<Vector> list;
 
 	//row 1
@@ -192,10 +195,15 @@ std::vector<Vector> GLViewPachinko::presetOne(WOPManager* wm){
 
 	setBoardState(Vector(1.5, 1, 0.9));
 
+	std::vector vals = { 0, 2, 4, 4, 2, 0 };
+
+	wm->setBucketVals(vals);
+	createBucketFonts(vals);
+
 	return list;
 }
 
-std::vector<Vector> GLViewPachinko::presetTwo(WOPManager* wm){
+std::vector<Vector> GLViewPachinko::presetTwo(){
 	std::vector<Vector> list;
 
 	//row 1
@@ -289,10 +297,15 @@ std::vector<Vector> GLViewPachinko::presetTwo(WOPManager* wm){
 
 	setBoardState(Vector(1.9, 1, 1.3));
 
+	std::vector vals = { -5, 0, 5, 15, 30, 15, 5, 0, -5 };
+
+	wm->setBucketVals(vals);
+	createBucketFonts(vals);
+
 	return list;
 }
 
-std::vector<Vector> GLViewPachinko::presetThree(WOPManager* wm){
+std::vector<Vector> GLViewPachinko::presetThree(){
 	std::vector<Vector> list;
 
 	//row 1
@@ -475,9 +488,32 @@ std::vector<Vector> GLViewPachinko::presetThree(WOPManager* wm){
 	wm->setSize(12);
 
 	setBoardState(Vector(2.3, 1, 1.7));
-	
+
+	std::vector vals = { -10, 0, 10, 20, 30, 50, 30, 20, 10, 0, -10 };
+
+	wm->setBucketVals(vals);
+	createBucketFonts(vals);
 
 	return list;
+
+}
+
+void GLViewPachinko::createBucketFonts(std::vector<int> bucketVals) {
+
+	int size = bucketVals.size();
+
+	float start = -2.5;
+
+	for (int i = 0; i < size; i++) {
+		WOFTGLString* scoreLabel = WOFTGLString::New(ManagerEnvironmentConfiguration::getSMM() + "/fonts/TREBUC.ttf", 30);
+		
+		scoreLabel->getModelT<MGLFTGLString>()->setFontColor(aftrColor4f(255.0f, 255.0f, 255.0f, 0.0f));
+		scoreLabel->getModelT<MGLFTGLString>()->setSize(10, 5);
+		scoreLabel->setPosition(0, start, 5);
+		worldLst->push_back(scoreLabel);
+
+		start += 5;
+	}
 
 }
 
@@ -549,7 +585,7 @@ void Aftr::GLViewPachinko::loadMap()
    //
 
 
-   std::vector<Vector> list = presetTwo(wm);
+   std::vector<Vector> list = presetThree();
 
    // to get the rotation angles, use this website:
    // https://www.andre-gaschler.com/rotationconverter/
