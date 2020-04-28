@@ -142,7 +142,7 @@ void GLViewPachinko::onKeyUp( const SDL_KeyboardEvent& key )
    GLView::onKeyUp( key );
 }
 
-std::vector<Vector> presetOne(WOPManager* wm){
+std::vector<Vector> GLViewPachinko::presetOne(WOPManager* wm){
 	std::vector<Vector> list;
 
 	//row 1
@@ -193,10 +193,12 @@ std::vector<Vector> presetOne(WOPManager* wm){
 
 	wm->setBallBounds(0, 20, 45);
 
+	setBoardState(Vector(1.5, 1, 0.9));
+
 	return list;
 }
 
-std::vector<Vector> presetTwo(WOPManager* wm){
+std::vector<Vector> GLViewPachinko::presetTwo(WOPManager* wm){
 	std::vector<Vector> list;
 
 	//row 1
@@ -287,10 +289,12 @@ std::vector<Vector> presetTwo(WOPManager* wm){
 
 	wm->setBallBounds(0, 35, 55);
 
+	setBoardState(Vector(1.9, 1, 1.3));
+
 	return list;
 }
 
-std::vector<Vector> presetThree(WOPManager* wm){
+std::vector<Vector> GLViewPachinko::presetThree(WOPManager* wm){
 	std::vector<Vector> list;
 
 	//row 1
@@ -471,6 +475,8 @@ std::vector<Vector> presetThree(WOPManager* wm){
 
 	wm->setBallBounds(0, 55, 75);
 
+	setBoardState(Vector(2.3, 1, 1.7));
+
 	return list;
 
 }
@@ -557,8 +563,6 @@ void Aftr::GLViewPachinko::loadMap()
    }
 
    //worldLst->push_back(wm->createBoard({ 50, 50, 50 }, grass));//(ManagerEnvironmentConfiguration::getSMM() + "images/DefaultTexture.jpg")));
-
-   setBoardState();
 
 }
 
