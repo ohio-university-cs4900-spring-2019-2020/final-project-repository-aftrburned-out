@@ -45,6 +45,10 @@ public:
 	WO* createPachinkoPeg(Vector pos);
 	/*This sets the min and max y values and height that the Pachinko ball can spawn*/
 	void setBallBounds(float min, float max, float height);
+	/*Sets the size of the board*/
+	void setSize(int s);
+	/*Gets the size of the board*/
+	int getSize();
 protected:
 	PxDefaultAllocator a;
 	PxDefaultErrorCallback e;
@@ -60,5 +64,6 @@ protected:
 	float max;
 	float min;
 	float height;
+	int size;
 	//PxCooking* cook;
 };

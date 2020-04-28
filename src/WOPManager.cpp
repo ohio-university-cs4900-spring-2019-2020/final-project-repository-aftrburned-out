@@ -143,3 +143,7 @@ float WOPManager::getMin() { return min; }
 float WOPManager::getMax() { return max; }
 
 float WOPManager::getHeight() { return height; }
+
+void WOPManager::setSize(int s) { size = s; }
+
+int WOPManager::getSize() { return size; }
