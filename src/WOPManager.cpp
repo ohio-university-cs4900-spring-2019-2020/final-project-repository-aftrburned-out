@@ -188,3 +188,13 @@ void WOPManager::changeScene()
 
 	scene = p->createScene(s);
 }
+
+void WOPManager::setBall(WO* wo)
+{
+	ball = wo;
+}
+
+WO* WOPManager::getBall()
+{
+	return ball;
+}

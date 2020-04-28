@@ -137,6 +137,7 @@ void PachinkoWOP::updatePoseFromPhysicsEngine(physx::PxActor* actor)
 
 PachinkoWOP::~PachinkoWOP()
 {
+	s->removeActor(*a);
 	this->p = nullptr;
 	this->s = nullptr;
 	this->a = nullptr;
