@@ -47,6 +47,8 @@ GLViewPachinko* GLViewPachinko::New( const std::vector< std::string >& args )
    glv->init( Aftr::GRAVITY, Vector( 0, 0, -1.0f ), "aftr.conf", PHYSICS_ENGINE_TYPE::petODE );
    glv->onCreate();
    glv->started = false;
+   glv->ballOut = false;
+   glv->score = 0;
 
    return glv;
 }
@@ -130,8 +132,15 @@ void GLViewPachinko::onMouseMove( const SDL_MouseMotionEvent& e )
 
 void GLViewPachinko::kill()
 {
+	ballOut = false;
 	worldLst->clear();
 	wm->changeScene();	//delete the physx objects
+}
+
+void Aftr::GLViewPachinko::eraseBall()
+{
+	worldLst->eraseViaWOptr(wm->getBall());
+	ballOut = false;
 }
 
 void GLViewPachinko::onKeyDown( const SDL_KeyboardEvent& key )
@@ -177,9 +186,12 @@ void GLViewPachinko::onKeyDown( const SDL_KeyboardEvent& key )
 
 	   createField(LARGE);
    }
-   if (started && key.keysym.sym == SDLK_SPACE)
+   if (started && !ballOut && key.keysym.sym == SDLK_SPACE)
    {
-		worldLst->push_back(wm->__createPachinkoBall());
+	    ballOut = true;
+		WO* wo = wm->__createPachinkoBall();
+		wm->setBall(wo);
+		worldLst->push_back(wo);
    }
    if (key.keysym.sym == SDLK_r)
    {
@@ -193,6 +205,10 @@ void GLViewPachinko::onKeyDown( const SDL_KeyboardEvent& key )
 	   worldLst->push_back(wo);
 
 	   started = false;
+   }
+   if (ballOut && key.keysym.sym == SDLK_e)
+   {
+	   eraseBall();
    }
 }
 

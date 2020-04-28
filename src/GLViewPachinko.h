@@ -40,6 +40,7 @@ public:
    virtual void createField(int preset);
    virtual void createBucketFonts(std::vector<int>);
    virtual void kill();
+   virtual void eraseBall();
    enum presets{SMALL = 1, MEDIUM = 2, LARGE = 3};
 
 
@@ -47,6 +48,7 @@ protected:
    GLViewPachinko( const std::vector< std::string >& args );
    virtual void onCreate();
    bool started;
+   bool ballOut;
 private:
 	WOPManager* wm;
 	int score;
