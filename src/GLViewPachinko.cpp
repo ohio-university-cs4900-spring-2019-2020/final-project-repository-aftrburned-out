@@ -132,7 +132,7 @@ void GLViewPachinko::createGUI() {
 	scoreLabel->setText("Score: " + std::to_string(score));
 	scoreLabel->setColor(0, 0, 0, 255);
 	scoreLabel->setFontSize(25); //font size is correlated with world size
-	scoreLabel->setPosition(Vector(0, 1, 0));
+	scoreLabel->setPosition(Vector(0, -1, 0));
 	scoreLabel->setFontOrientation(FONT_ORIENTATION::foRIGHT_TOP);
 	scoreLabel->setFontPath(trebuc);
 	worldLst->push_back(scoreLabel);
@@ -158,7 +158,7 @@ void GLViewPachinko::onCreate()
 
 GLViewPachinko::~GLViewPachinko()
 {
-
+	delete wm;
 }
 
 void GLViewPachinko::updateWorld()
@@ -184,8 +184,6 @@ void GLViewPachinko::updateWorld()
 		   int toAdd = wm->getBucketVals().at(int(floor(ypos + 5)) / 5);
 
 		   updateScore(toAdd);
-
-		   
 
 		   eraseBall();
 	   }
@@ -227,8 +225,13 @@ void GLViewPachinko::kill()
 void Aftr::GLViewPachinko::eraseBall()
 {
 	WO* wo = wm->getBall();
+	PxActor* a = ((PachinkoWOP*)wo)->getActor();
 	worldLst->eraseViaWOptr(wo);
-	((PachinkoWOP*)wo)->getActor()->release();
+	if (a->isReleasable())
+	{
+		a->release();
+	}
+	
 	ballOut = false;
 }
 

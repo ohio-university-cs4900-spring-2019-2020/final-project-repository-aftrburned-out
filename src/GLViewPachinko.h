@@ -2,6 +2,9 @@
 
 #include "GLView.h"
 #include "WOPManager.h"
+#include "WOFTGLString.h"
+#include "MGLFTGLString.h"
+#include "WOGUILabel.h"
 
 namespace Aftr
 {
@@ -51,10 +54,10 @@ protected:
    virtual void onCreate();
    bool started;
    bool ballOut;
-   WOGUILabel* scoreLabel;
 private:
 	WOPManager* wm;
 	int score;
+	WOGUILabel* scoreLabel;
 };
 
 /** \} */
