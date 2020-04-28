@@ -20,6 +20,7 @@ public:
 	void setRotation(const float* info);
 	void updatePoseFromPhysicsEngine(physx::PxActor* actor);
 	PxObj t;
+	PxActor* getActor();
 	~PachinkoWOP();
 protected:
 	PachinkoWOP(physx::PxPhysics* p, physx::PxScene* s);

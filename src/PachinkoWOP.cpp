@@ -85,7 +85,7 @@ void PachinkoWOP::onCreate(const std::string& path, const Aftr::Vector& scale, A
 	a->attachShape(*shape);
 	a->userData = this;
 	this->s->addActor(*a);
-
+	
 	//initial physics update (runs for static actors too)
 	PachinkoWOP* wo = static_cast<PachinkoWOP*>(a->userData);
 	wo->updatePoseFromPhysicsEngine(a);
@@ -135,8 +135,17 @@ void PachinkoWOP::updatePoseFromPhysicsEngine(physx::PxActor* actor)
 	}
 }
 
+PxActor* PachinkoWOP::getActor()
+{
+	return this->a;
+}
+
 PachinkoWOP::~PachinkoWOP()
 {
+	if (a->isReleasable())
+	{
+		a->release();
+	}
 	s->removeActor(*a);
 	this->p = nullptr;
 	this->s = nullptr;
