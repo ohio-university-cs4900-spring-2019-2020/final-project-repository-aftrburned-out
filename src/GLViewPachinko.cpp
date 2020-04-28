@@ -104,6 +104,25 @@ void GLViewPachinko::updateWorld()
 	   wm->updatePhysics();
    }
 
+   WO* ball = wm->getBall();
+   // if ball is out AND ball is below z = 4
+   if (ballOut && ball->getPosition().z < 4.0)
+   {
+	   // if ball is sleeping
+	   if (((PxRigidDynamic*)((PachinkoWOP*)ball)->getActor())->isSleeping())
+	   {
+		   float ypos = ball->getPosition().y;
+
+		   int toAdd = wm->getBucketVals().at(int(floor(ypos + 5)) / 5);
+
+		   updateScore(toAdd);
+
+		   std::cout << "ypos: " << ypos << "score: " << score << std::endl;
+
+		   eraseBall();
+	   }
+   }
+
 }
 
 
@@ -139,8 +158,16 @@ void GLViewPachinko::kill()
 
 void Aftr::GLViewPachinko::eraseBall()
 {
-	worldLst->eraseViaWOptr(wm->getBall());
+	WO* wo = wm->getBall();
+	worldLst->eraseViaWOptr(wo);
+	((PachinkoWOP*)wo)->getActor()->release();
 	ballOut = false;
+}
+
+void GLViewPachinko::updateScore(int toAdd)
+{
+	score += toAdd;
+	// add gui update code here
 }
 
 void GLViewPachinko::onKeyDown( const SDL_KeyboardEvent& key )

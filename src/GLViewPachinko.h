@@ -41,6 +41,7 @@ public:
    virtual void createBucketFonts(std::vector<int>);
    virtual void kill();
    virtual void eraseBall();
+   virtual void updateScore(int toAdd);
    enum presets{SMALL = 1, MEDIUM = 2, LARGE = 3};
 
 
