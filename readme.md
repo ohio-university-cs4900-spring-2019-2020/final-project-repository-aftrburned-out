@@ -1,6 +1,3 @@
-# AftrBurned Out Pachinko - Buckets
+# AftrBurned Out Pachinko - Master
 
-## ToDo
-* Get scores working
-* Buckets implemented
-   * Scores with updating GUI
+https://youtu.be/nAQdm1RnVks
