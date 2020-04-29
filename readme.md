@@ -1,3 +1,3 @@
 # AftrBurned Out Pachinko - Master
 
-https://youtu.be/nAQdm1RnVks
+[Link to our presentation and demo](https://youtu.be/nAQdm1RnVks)
